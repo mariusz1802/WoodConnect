@@ -27,7 +27,7 @@
             {% set type = ((pos + i) % 2) == 0 ? 'box_s' : 'box_b' %}
             <a href="{{ node|url }}" class="box {{ type }} {{ node|variable('over') == 'light' ? 'light-box' : 'dark-box' }}{% if pos==0 %} first{% endif %}{% if pos==max-1 %} last{% endif %}">
                 <span class="img">
-                    <img src="{{ (node|variable('photo').path|default(false) ? _upload~node|variable('photo').path : 'images/nophoto.jpg')|imagine_filter(type) }}" />
+                    <img src="{{ (node|variable('photo').path|default(false) ? _upload~node|variable('photo').path : 'images/nophoto.jpg')|imagine_filter(type) }}" alt="{{ node|variable('title') }}" loading="lazy" />
                     <span class="scale" style="background-image: url({{ (node|variable('photo').path|default(false) ? _upload~node|variable('photo').path : 'images/nophoto.jpg')|imagine_filter(type) }})"></span>
                 </span> 
                 <span class="shadow"></span>

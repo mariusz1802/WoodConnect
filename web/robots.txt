@@ -1,5 +1,11 @@
 # www.robotstxt.org/
-# www.google.com/support/webmasters/bin/answer.py?hl=en&answer=156449
 
 User-agent: *
-Disallow:
+Disallow: /admin/
+Disallow: /_download/
+Disallow: /app_dev.php
+Disallow: /config.php
+Disallow: /search?
+Allow: /
+
+Sitemap: https://woodconnect.eu/sitemap.xml

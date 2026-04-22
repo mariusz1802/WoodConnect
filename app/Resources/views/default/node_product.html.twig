@@ -10,8 +10,8 @@
 <div class="product-description">
 	<div class="wrap">
 		{%if node|variable('photo') %}
-			<div class="photo"> 
-				<img src="{{ asset(_upload~ node|variable('photo').path) }}" alt="" />
+			<div class="photo">
+				<img src="{{ asset(_upload~ node|variable('photo').path) }}" alt="{{ node|variable('title') }}" loading="lazy" />
 			</div>
 		{% endif %}
 		<div class="content">
@@ -46,3 +46,28 @@
 {% block meta_keywords %}{{ node|variable('meta_keywords')|default('') }}{% endblock %}
 {% block meta_description %}{{ node|variable('meta_description')|default('') }}{% endblock %}
 {%block body_class %}header-shadow{% endblock %}
+{% block schema_json %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "{{ node|variable('title')|e('js') }}",
+  "description": "{{ node|variable('meta_description')|default(node|variable('title'))|e('js') }}",
+  "url": "{{ app.request.scheme ~ '://' ~ app.request.httpHost ~ app.request.pathInfo }}",
+  "brand": {
+    "@type": "Brand",
+    "name": "WoodConnect"
+  }{% if node|variable('photo') %},
+  "image": "{{ app.request.scheme ~ '://' ~ app.request.httpHost ~ asset(_upload ~ node|variable('photo').path) }}"{% endif %},
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "PLN",
+    "availability": "https://schema.org/InStock",
+    "seller": {
+      "@type": "Organization",
+      "name": "WoodConnect"
+    }
+  }
+}
+</script>
+{% endblock %}

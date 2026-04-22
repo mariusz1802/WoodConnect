@@ -25,6 +25,7 @@
 
 # Dane wrażliwe i pliki tymczasowe
 /dump.sql
+/*.sql
 /log
 /tmp/
 /_NEWvar/

@@ -8,7 +8,57 @@
 <meta name="keywords" content="{% block meta_keywords %}{{ sett('home_meta_keywords') }}{% endblock %}" />
 <meta name="google-site-verification" content="QHM650oFXHSXtYMYLMwCOae7iWfkKMObwSoNZohFCOg" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+{% set _page_title = block('title') %}
+{% set _page_desc = block('meta_description') %}
+{% set _page_url = app.request.scheme ~ '://' ~ app.request.httpHost ~ app.request.requestUri %}
+{% set _canonical_url = app.request.scheme ~ '://' ~ app.request.httpHost ~ app.request.pathInfo %}
 <title>{% block title %}{{ sett('home_meta_title') }}{% endblock %}</title>
+<link rel="canonical" href="{{ _canonical_url }}" />
+<meta property="og:type" content="{% block og_type %}website{% endblock %}" />
+<meta property="og:title" content="{{ _page_title }}" />
+<meta property="og:description" content="{{ _page_desc }}" />
+<meta property="og:url" content="{{ _canonical_url }}" />
+<meta property="og:site_name" content="WoodConnect" />
+<meta property="og:locale" content="pl_PL" />
+{% block og_image %}{% if sett('og_image') %}<meta property="og:image" content="{{ app.request.scheme ~ '://' ~ app.request.httpHost ~ asset(_upload ~ sett('og_image').path) }}" />{% endif %}{% endblock %}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="{{ _page_title }}" />
+<meta name="twitter:description" content="{{ _page_desc }}" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "WoodConnect",
+  "url": "https://woodconnect.eu",
+  "logo": "https://woodconnect.eu/images/logo.png",
+  "description": "Hurtownia płyt meblowych, dystrybutor Egger. Oferujemy cięcie, oklejanie i wiercenie płyt na wymiar.",
+  "telephone": "{{ sett('phone')|default('+48000000000') }}",
+  "email": "{{ sett('email')|default('biuro@woodconnect.eu') }}",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "PL",
+    "addressRegion": "Łódź",
+    "streetAddress": "{{ sett('address')|default('') }}"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "51.3167",
+    "longitude": "18.1500"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "08:00",
+      "closes": "16:00"
+    }
+  ],
+  "sameAs": [
+    "https://www.facebook.com/woodconnect"
+  ]
+}
+</script>
+{% block schema_json %}{% endblock %}
 {% stylesheets 'css/content.css'
                 'css/jquery.nivo.css'
                 'css/lightcase.css'

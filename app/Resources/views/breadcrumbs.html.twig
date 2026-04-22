@@ -1,11 +1,13 @@
 <div id="breadcrumbs">
 <div class="wrap">
-<ol>
+<ol itemscope itemtype="https://schema.org/BreadcrumbList">
 {% for breadcrumb_item in path %}
-	{% if loop.first %}
+    {% if loop.first %}
     {% else %}
-    <li><a href="{{ breadcrumb_item.uri }}">{{ breadcrumb_item.label }} </a></li>
-    
+    <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="{{ breadcrumb_item.uri }}"><span itemprop="name">{{ breadcrumb_item.label }}</span></a>
+        <meta itemprop="position" content="{{ loop.index }}" />
+    </li>
     {% endif %}
 {% endfor %}
 </ol>

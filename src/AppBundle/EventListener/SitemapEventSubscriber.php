@@ -45,24 +45,36 @@ class SitemapEventSubscriber implements EventSubscriberInterface
         if ($this->stack->getCurrentRequest()) {
             $prefix = $this->stack->getCurrentRequest()->getSchemeAndHttpHost();
         }
-        $this->registerBlogPostsUrls($prefix,$this->provider->get('app.menu'), $event->getUrlContainer());
-        $this->registerNodes('news', $event->getUrlContainer());
-        $this->registerNodes('product', $event->getUrlContainer());
+        $this->registerMenuUrls($prefix, $this->provider->get('app.menu'), $event->getUrlContainer());
+        $this->registerNodes('news', $event->getUrlContainer(), 0.6);
+        $this->registerNodes('product', $event->getUrlContainer(), 0.8);
+        $this->registerNodes('offer', $event->getUrlContainer(), 0.8);
+        $this->registerNodes('page', $event->getUrlContainer(), 0.7);
     }
 
-    public function registerBlogPostsUrls($prefix,MenuItem $menu, UrlContainerInterface $urls)
+    public function registerMenuUrls($prefix, MenuItem $menu, UrlContainerInterface $urls)
     {
         foreach ($menu as $item) {
-            $urls->addUrl(new UrlConcrete($item->getUri()), 'menu');
-            $this->registerBlogPostsUrls($prefix,$item, $urls);
+            if ($item->getUri()) {
+                $urls->addUrl(
+                    new UrlConcrete($item->getUri(), new \DateTime(), UrlConcrete::CHANGEFREQ_WEEKLY, 0.9),
+                    'menu'
+                );
+            }
+            $this->registerMenuUrls($prefix, $item, $urls);
         }
     }
 
-    public function registerNodes($type, UrlContainerInterface $urls)
+    public function registerNodes($type, UrlContainerInterface $urls, float $priority = 0.7)
     {
-
         foreach ($this->nodes->getNodes($type, ['where' => ['public' => true]]) as $item) {
-            $urls->addUrl(new UrlConcrete($this->nodes->getUrl($item, UrlGeneratorInterface::ABSOLUTE_URL)), $type);
+            $url = $this->nodes->getUrl($item, UrlGeneratorInterface::ABSOLUTE_URL);
+            if ($url) {
+                $urls->addUrl(
+                    new UrlConcrete($url, new \DateTime(), UrlConcrete::CHANGEFREQ_MONTHLY, $priority),
+                    $type
+                );
+            }
         }
     }
 }
