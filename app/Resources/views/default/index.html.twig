@@ -56,5 +56,52 @@
         </div>
     {% endif %}
 
+{% if sett('home_faq_q_1') %}
+<section class="home-faq" id="faq">
+    <div class="wrap">
+        <h2>Najczęściej zadawane pytania</h2>
+        <div class="faq-list">
+            {% for i in 1..10 %}
+            {% if sett('home_faq_q_' ~ i) %}
+            <div class="faq-item">
+                <h3 class="faq-question">{{ sett('home_faq_q_' ~ i) }}</h3>
+                <div class="faq-answer">{{ sett('home_faq_a_' ~ i)|default('')|raw }}</div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<script>
+(function($){
+    $('.faq-question').on('click', function(){
+        $(this).toggleClass('faq-open').next('.faq-answer').slideToggle(200);
+    });
+})(jQuery);
+</script>
+{% endif %}
+
 {% endblock %}
 {% block body_class %}home{% endblock %}
+
+{% block schema_json %}
+{% if sett('home_faq_q_1') %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {% for i in 1..10 %}{% if sett('home_faq_q_' ~ i) %}{% if i > 1 and sett('home_faq_q_' ~ (i-1)) %},{% endif %}
+    {
+      "@type": "Question",
+      "name": "{{ sett('home_faq_q_' ~ i)|e('js') }}",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{{ sett('home_faq_a_' ~ i)|default('')|striptags|e('js') }}"
+      }
+    }{% endif %}{% endfor %}
+  ]
+}
+</script>
+{% endif %}
+{% endblock %}

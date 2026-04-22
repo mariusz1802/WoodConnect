@@ -1,0 +1,91 @@
+{% extends 'default/node_service.html.twig' %}
+
+{# Nadpisuje body: dodaje sekcję cennika przed modułami treści #}
+{% block body %}
+<div class="title-wrap">
+    <h1><span>{{ node|variable('title') }}</span></h1>
+</div>
+
+{% set _has_cennik = node|variable('cennik_usluga_1') %}
+{% if _has_cennik %}
+<section class="cennik-section">
+    <div class="wrap">
+        <table class="cennik-table">
+            <thead>
+                <tr>
+                    <th>Usługa</th>
+                    <th>Opis</th>
+                    <th class="price">Cena netto</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for i in 1..20 %}
+                {% set _usluga = node|variable('cennik_usluga_' ~ i) %}
+                {% if _usluga %}
+                <tr>
+                    <td>{{ _usluga }}</td>
+                    <td>{{ node|variable('cennik_opis_' ~ i)|default('') }}</td>
+                    <td class="price">{{ node|variable('cennik_cena_' ~ i)|default('wycena indywidualna') }}</td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+        {% if node|variable('cennik_uwagi') %}
+        <p style="font-size:13px;color:#888;margin-top:10px;">{{ node|variable('cennik_uwagi') }}</p>
+        {% endif %}
+    </div>
+</section>
+{% endif %}
+
+<div class="service-content">
+    {% for m in node|section('content') %}
+        {{ m|render_module }}
+    {% endfor %}
+</div>
+
+{# FAQ odziedziczone z node_service — działa identycznie #}
+{% set _faq = [] %}
+{% for i in 1..10 %}
+    {% set _q = node|variable('faq_q_' ~ i) %}
+    {% set _a = node|variable('faq_a_' ~ i) %}
+    {% if _q and _a %}
+        {% set _faq = _faq|merge([{q: _q, a: _a}]) %}
+    {% endif %}
+{% endfor %}
+
+{% if _faq|length > 0 %}
+<section class="faq-section" id="faq">
+    <div class="wrap">
+        <h2>Najczęściej zadawane pytania o ceny</h2>
+        <div class="faq-list">
+            {% for item in _faq %}
+            <div class="faq-item">
+                <h3 class="faq-question">{{ item.q }}</h3>
+                <div class="faq-answer">{{ item.a|raw }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<script>
+(function($){
+    $('.faq-question').on('click', function(){
+        $(this).toggleClass('faq-open').next('.faq-answer').slideToggle(200);
+    });
+})(jQuery);
+</script>
+{% endif %}
+
+<section class="service-cta">
+    <div class="wrap">
+        <h2>{{ node|variable('cta_title')|default('Potrzebujesz indywidualnej wyceny?') }}</h2>
+        <p>{{ node|variable('cta_text')|default('Napisz do nas – podaj wymiary i ilość, a wycenimy Twoje zamówienie w ciągu 24h.') }}</p>
+        <a href="{{ sett('contact_url')|default('/kontakt') }}" class="cta-btn">Zapytaj o cenę</a>
+    </div>
+</section>
+{% endblock %}
+
+{% block schema_json %}
+{{ parent() }}
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends '::base.html.twig' %}
+
+{# Zbierz FAQ z variables CMS: faq_q_1..10 / faq_a_1..10 #}
+{% set _faq = [] %}
+{% for i in 1..10 %}
+    {% set _q = node|variable('faq_q_' ~ i) %}
+    {% set _a = node|variable('faq_a_' ~ i) %}
+    {% if _q and _a %}
+        {% set _faq = _faq|merge([{q: _q, a: _a}]) %}
+    {% endif %}
+{% endfor %}
+
+{% block title %}{{ node|variable('meta_title')|default(node|variable('title')) }}{% endblock %}
+
+{% block body %}
+<div class="title-wrap">
+    <h1><span>{{ node|variable('title') }}</span></h1>
+</div>
+
+<div class="service-content">
+    {% for m in node|section('content') %}
+        {{ m|render_module }}
+    {% endfor %}
+</div>
+
+{% if _faq|length > 0 %}
+<section class="faq-section" id="faq">
+    <div class="wrap">
+        <h2>Najczęściej zadawane pytania</h2>
+        <div class="faq-list">
+            {% for item in _faq %}
+            <div class="faq-item">
+                <h3 class="faq-question">{{ item.q }}</h3>
+                <div class="faq-answer">{{ item.a|raw }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<script>
+(function($){
+    $('.faq-question').on('click', function(){
+        $(this).toggleClass('faq-open').next('.faq-answer').slideToggle(200);
+    });
+})(jQuery);
+</script>
+{% endif %}
+
+<section class="service-cta">
+    <div class="wrap">
+        <h2>{{ node|variable('cta_title')|default('Zamów usługę lub wyślij zapytanie') }}</h2>
+        <p>{{ node|variable('cta_text')|default('Skontaktuj się z nami – wycenimy Twoje zamówienie i odpowiemy na wszystkie pytania.') }}</p>
+        <a href="{{ sett('contact_url')|default('/kontakt') }}" class="cta-btn">Wyślij zapytanie</a>
+    </div>
+</section>
+{% endblock %}
+
+{% block top %}
+{% set path = knp_menu_get_breadcrumbs_array(knp_menu_get_current_item('app.menu')) %}
+{% include '::breadcrumbs.html.twig' with {node: node, path: path} only %}
+{% for m in node|section('top') %}
+    {{ m|render_module }}
+{% else %}
+    {% include '::slider.html.twig' %}
+{% endfor %}
+{% endblock %}
+
+{% block meta_keywords %}{{ node|variable('meta_keywords')|default('') }}{% endblock %}
+{% block meta_description %}{{ node|variable('meta_description')|default('') }}{% endblock %}
+{% block body_class %}header-shadow{% endblock %}
+
+{% block schema_json %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "{{ node|variable('title')|e('js') }}",
+  "description": "{{ node|variable('meta_description')|default(node|variable('title'))|e('js') }}",
+  "url": "{{ app.request.scheme ~ '://' ~ app.request.httpHost ~ app.request.pathInfo }}",
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": "WoodConnect",
+    "url": "https://woodconnect.eu"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Poland"
+  }
+}
+</script>
+{% if _faq|length > 0 %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {% for item in _faq %}
+    {
+      "@type": "Question",
+      "name": "{{ item.q|e('js') }}",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{{ item.a|striptags|e('js') }}"
+      }
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+{% endif %}
+{% endblock %}

@@ -1,5 +1,16 @@
 {% extends '::base.html.twig' %}
 {% set top_modules = node|section('top') %}
+
+{# FAQ variables computed at template scope so accessible in all blocks #}
+{% set _page_faq = [] %}
+{% for i in 1..10 %}
+    {% set _q = node|variable('faq_q_' ~ i) %}
+    {% set _a = node|variable('faq_a_' ~ i) %}
+    {% if _q and _a %}
+        {% set _page_faq = _page_faq|merge([{q: _q, a: _a}]) %}
+    {% endif %}
+{% endfor %}
+
 {% block title %}{{ node|variable('meta_title')|default(node|variable('title')) }}{%endblock%}
 {% block body %}
 <div class="title-wrap">
@@ -17,19 +28,19 @@
     {% if max  > 0 %}
         {% for i in [0,1] %}
         <div class="row row-{{ i }}">
-        
+
             {% for pos in 0..(max - 1)  %}
             {%if items[loop.index0 + (i * max)]|default(false) %}
             {%  set node = items_objects[items[loop.index0 + (i * max)]].extra('node')|default(false) %}
-           
+
             {% if node %}
-            
+
             {% set type = ((pos + i) % 2) == 0 ? 'box_s' : 'box_b' %}
             <a href="{{ node|url }}" class="box {{ type }} {{ node|variable('over') == 'light' ? 'light-box' : 'dark-box' }}{% if pos==0 %} first{% endif %}{% if pos==max-1 %} last{% endif %}">
                 <span class="img">
                     <img src="{{ (node|variable('photo').path|default(false) ? _upload~node|variable('photo').path : 'images/nophoto.jpg')|imagine_filter(type) }}" alt="{{ node|variable('title') }}" loading="lazy" />
                     <span class="scale" style="background-image: url({{ (node|variable('photo').path|default(false) ? _upload~node|variable('photo').path : 'images/nophoto.jpg')|imagine_filter(type) }})"></span>
-                </span> 
+                </span>
                 <span class="shadow"></span>
                 <span class="x t"></span>
                 <span class="x b"></span>
@@ -37,7 +48,7 @@
                 <span class="x l"></span>
                 <span class="tit"><i></i>{{ node|variable('title') }}</span>
             </a>
-            
+
             {% endif %}
             {%endif%}
             {% endfor %}
@@ -49,6 +60,30 @@
 
 {% endif %}
 <div class="clear-fix"></div>
+
+{% if _page_faq|length > 0 %}
+<section class="faq-section" id="faq">
+    <div class="wrap">
+        <h2>Najczęściej zadawane pytania</h2>
+        <div class="faq-list">
+            {% for item in _page_faq %}
+            <div class="faq-item">
+                <h3 class="faq-question">{{ item.q }}</h3>
+                <div class="faq-answer">{{ item.a|raw }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<script>
+(function($){
+    $('.faq-question').on('click', function(){
+        $(this).toggleClass('faq-open').next('.faq-answer').slideToggle(200);
+    });
+})(jQuery);
+</script>
+{% endif %}
+
 {% endblock %}
 {% block top %}
 {% for m in top_modules %}
@@ -60,3 +95,25 @@
 {% block meta_description %}{{ node|variable('meta_description')|default('') }}{% endblock %}
 {% block body_class %}{% if top_modules|length == 0 %}header-shadow{% endif %}{% endblock %}
 
+{% block schema_json %}
+{% if _page_faq|length > 0 %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {% for item in _page_faq %}
+    {
+      "@type": "Question",
+      "name": "{{ item.q|e('js') }}",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "{{ item.a|striptags|e('js') }}"
+      }
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'default/node_service.html.twig' %}
+
+{# Nadpisuje schema_json: dodaje Schema HowTo na podstawie variables step_1..step_10 #}
+{% block schema_json %}
+{{ parent() }}
+{% set _steps = [] %}
+{% for i in 1..10 %}
+    {% set _s = node|variable('step_' ~ i) %}
+    {% if _s %}
+        {% set _steps = _steps|merge([_s]) %}
+    {% endif %}
+{% endfor %}
+{% if _steps|length > 0 %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "{{ node|variable('title')|e('js') }}",
+  "description": "{{ node|variable('meta_description')|default(node|variable('title'))|e('js') }}",
+  "step": [
+    {% for step in _steps %}
+    {
+      "@type": "HowToStep",
+      "position": {{ loop.index }},
+      "text": "{{ step|striptags|e('js') }}"
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+{% endif %}
+{% endblock %}
