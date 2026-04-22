@@ -1,0 +1,40 @@
+{% extends 'w3desAdminBundle::base.html.twig' %}
+{% trans_default_domain "admin" %}
+{% block body %}
+
+<div class="box">
+    <form action="{{ path('admin.login') }}" method="post">
+        <div class="form">
+            <label for="username">E-mail:</label>
+            <input type="text" id="username" class="text" name="_username" value="{{ last_username }}" />
+            <div class="clear-fix"></div>
+            <label for="password" >Hasło:</label>
+            <input type="password" id="password" class="text" name="_password" />
+            <div class="clear-fix"></div>
+            {#
+                If you want to control the URL the user
+                is redirected to on success (more details below)
+                <input type="hidden" name="_target_path" value="/account" />
+            #}
+            <button type="submit"><span class="submit">Zaloguj</span></button>
+            {% if error %}
+    <div class="err">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+        </div>
+    </form>
+</div>
+{% endblock %}
+{% block page_title %}Logowanie{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+{% javascripts 'bundles/w3desadmin/js/jquery.js' 'bundles/w3desadmin/js/signin.js' 
+                filter='?uglifyjs2' output='js/compiled/admin_signin.js' %}
+        <script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+{% endblock %}
+
+{% block stylesheets %}
+{% stylesheets 'bundles/w3desadmin/css/signin.css' filter='cssrewrite,?uglifycss' output='css/compiled/admin_signin.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+{% endblock %}

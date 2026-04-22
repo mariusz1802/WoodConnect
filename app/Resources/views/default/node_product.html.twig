@@ -1,0 +1,48 @@
+{% extends '::base.html.twig' %}
+{% block title %}{{ node|variable('meta_title')|default(node|variable('title')) }}{%endblock%}
+{% block body %}
+{% set content_modules = node|section('content')  %}
+{% set description_module = false %}
+
+{% if content_modules|length > 0 and content_modules|first.type == 'w3des\\AdminBundle\\NodeModule\\ContentModule'  %}
+	{% set description_module = content_modules|first %}
+{% endif %}
+<div class="product-description">
+	<div class="wrap">
+		{%if node|variable('photo') %}
+			<div class="photo"> 
+				<img src="{{ asset(_upload~ node|variable('photo').path) }}" alt="" />
+			</div>
+		{% endif %}
+		<div class="content">
+			<div class="title-wrap"><h1><span>{{ node|variable('title') }}</span></h1></div>
+			{% if description_module %}
+				{{ description_module|render_module }}
+			{% endif %}
+		</div>
+	</div>
+</div>
+<div class="product-content">
+	{% for m in node|section('content') %}
+		{% if not loop.first or (loop.first and not description_module) %}
+			{{ m|render_module }}
+		{% endif %}
+	{% endfor %}
+	<div class="back-wrap"><a href="javascript:history.go(-1)"><i></i> wróć do kategorii</a></div>
+</div>
+{% endblock %}
+{% block top %}
+{% set path = knp_menu_get_breadcrumbs_array(knp_menu_get_current_item('app.menu')) %}
+{#}
+{% set path = path|merge([{label : node|variable('title'), node : node}]) %}
+#}
+{% include '::breadcrumbs.html.twig' with {node: node, path : path} only %}
+{% for m in node|section('top') %}
+{{ m|render_module }}
+{% else %}
+{%  include '::slider.html.twig'%}
+{% endfor %}
+{% endblock %}
+{% block meta_keywords %}{{ node|variable('meta_keywords')|default('') }}{% endblock %}
+{% block meta_description %}{{ node|variable('meta_description')|default('') }}{% endblock %}
+{%block body_class %}header-shadow{% endblock %}

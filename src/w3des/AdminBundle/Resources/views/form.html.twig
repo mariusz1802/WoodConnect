@@ -1,0 +1,104 @@
+{% block integer_widget %}
+    {% set type = type|default('number') %}
+    {{ block('form_widget_simple') }}
+{% endblock integer_widget %}
+{% block adv_file_row %}
+{% spaceless %}
+    <div class="form-group adv-file">
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+        <div class="up">
+        {{ form_row(form.file) }}
+        </div>
+        <div class="remove">
+        {% if form.remove is defined %}
+        {{ form_row(form.remove) }}
+        <small ><a href="{{ asset(_upload ~ form.vars.value.path) }}" target="_BLANK">
+        {% if form.vars.value.width > 0 %}<img src="{{ asset(_upload ~ form.vars.value.path) }}" width="80" />{% endif %}
+        {{ form.vars.value.path }}</a></small> / {{ form.vars.value.mime }} / 
+        {% if form.vars.value.width > 0 %}
+        {{ form.vars.value.width }} x {{ form.vars.value.height }}
+        {% endif %}
+        {% endif %}
+        </div>
+        <div class="clear-fix"></div>
+        
+    </div>
+{% endspaceless %}
+{% endblock %}
+{% block fieldset_row %}
+{% spaceless %}
+    <fieldset class="form-group fieldset">
+        <legend>{{ form_label(form) }}</legend>
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+    </fieldset>
+{% endspaceless %}
+{% endblock %}
+{% block gallery_item_row %}
+{% spaceless %}
+    <div class="gallery-item">
+        <span class="close"></span>
+        {% if form.vars.thmb %}
+        <span class="ph"><img src="{% if form.fields.photo.vars.value %}{{ (_upload ~ form.fields.photo.vars.value)| imagine_filter('admin') }}{%else%}__thmb__{% endif %}" /></span>
+        {% else %}
+        <span class="ph" style="height: 30px;">Brak miniaturki</span>
+        {% endif %}
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+    </div>
+{% endspaceless %}
+{% endblock %}
+
+{% block node_module_row %}
+{% spaceless %}
+    <fieldset class="form-group node-module fieldset">
+        <legend>{{ form_label(form) }}
+        | <a href="#" class="remove-module" onclick="return confirm('Jesteś pewny?');"><img src="{{ asset('bundles/w3desadmin/images/ico/16/delete.png') }}" /> usuń</a></legend>
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+    </fieldset>
+{% endspaceless %}
+{% endblock %}
+{% block node_modules_row %}
+{% spaceless %}
+    <div class="form-group node-modules" data-count="{{ form.children|length }}">
+        <p class="btns">
+        <img src="{{ asset('bundles/w3desadmin/images/ico/16/add.png') }}" /> Dodaj:
+        {% for type, mod in form.vars.modules %}
+            <a href="#" class="add-module" data-prototype="{{ form_row(form.vars.prototype[type])|escape('html') }}">{{ mod.label }}</a>
+            &nbsp;            &nbsp;            &nbsp;
+        {% endfor %}
+        </p>
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+    </div>
+{% endspaceless %}
+{% endblock %}
+{% block gallery_widget %}
+{% spaceless %}
+    <div class="form-group gallery" data-count="{{ form.children|length }}">
+        <div class="upload-button" data-url="{{ url('admin.upload') }}" data-dir="{{ form.vars.dir }}" class="button">Wyślij pliki</div>
+        <div class="progress"></div>
+        {{ form_label(form) }}
+        {{ form_errors(form) }}
+            <div {{ block('widget_container_attributes') }} data-prototype="{{ form_row(form.vars.prototype)|escape('html') }}">
+                {%- if form.parent is empty -%}
+                    {{ form_errors(form) }}
+                {%- endif -%}
+                {{- block('form_rows') -}}
+                {{- form_rest(form) -}}
+            </div>
+    </div>
+{% endspaceless %}
+{% endblock %}
+{% block tab_row %}
+{% spaceless %}
+    <div class="group">
+        <h2>{{ form_label(form) }}</h2>
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+    </div>
+{% endspaceless %}
+{% endblock %}

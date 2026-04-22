@@ -1,0 +1,10 @@
+{% extends 'security/login.html.twig' %}
+{% block left %}
+    {{ form_start(form) }}
+    <h2>Przypomnij hasło</h2>
+    {{ form_row(form.email) }}
+    <div class="btns">
+        <input type="submit" value="wyślij" class="submit" />
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

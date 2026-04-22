@@ -1,0 +1,904 @@
+@import
+    url(https://fonts.googleapis.com/css?family=Ubuntu:400,400italic,300,300italic,700,700italic&amp;subset=latin,latin-ext)
+    ;
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
+    blockquote, pre, a, abbr, acronym, address, big, cite, code, del,
+    dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup,
+    tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form,
+    label, legend, table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed, figure, figcaption, footer,
+    header, hgroup, menu, nav, output, ruby, section, summary, time,
+    mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup,
+    menu, nav, section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+form, p, h1, h2, h3, h4, h5, h6, ul, ol, li, div, html, body, input,
+    textarea {
+    margin: 0;
+    padding: 0;
+    font-size: 100%
+}
+
+input, textarea, button {
+    font-family: "Tahoma", arial;
+    outline: 0
+}
+
+a {
+    color: #003055
+}
+
+a:focus {
+    outline: 0
+}
+
+img {
+    border: 0 solid
+}
+
+.clearFix, .clear-fix {
+    clear: both
+}
+
+.adv-file img {
+    vertical-align: middle;
+}
+
+.adv-file .up {
+    float: left;
+}
+
+.adv-file .remove {
+    float: left;
+    marging-left: 20px;
+    border-left: 1px solid silver;
+    padding-left: 20px;
+}
+
+.adv-file .form-group {
+    padding: 3px;
+}
+
+html, body {
+    height: 100%;
+    font-family: "Tahoma";
+    font-size: 12px;
+    color: black
+}
+
+fieldset {
+    border: 1px solid silver;
+    margin-bottom: 14px;
+}
+
+fieldset legend {
+    background: white;
+    padding: 5px 15px;
+    border: 1px solid silver;
+}
+
+html {
+    background: #f6f6f6
+}
+
+#error {
+    padding-top: 20px
+}
+
+#outer {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    position: relative;
+    min-width: 1200px;
+    overflow: hidden
+}
+
+#topBar {
+    height: 33px;
+    line-height: 33px;
+    position: relative;
+    background: #1c1c1c;
+    color: white
+}
+
+#topBar .domain {
+    padding-left: 20px;
+    float: left
+}
+
+#topBar .lang {
+    float: left;
+    padding-left: 30px
+}
+
+#topBar .lang img {
+    vertical-align: middle
+}
+
+#topBar .version {
+    float: left;
+    padding-left: 30px;
+    font-size: 11px
+}
+
+#topBar .select .space {
+    padding: 0 10px
+}
+
+#topBar .select img {
+    margin: 0 5px
+}
+
+#topBar .select a {
+    color: #0fa7d9;
+    text-decoration: none
+}
+
+#topBar .select a:hover {
+    opacity: .8
+}
+
+#topBar .domain a {
+    color: #0fa7d9;
+    text-decoration: none
+}
+
+#topBar .domain a:hover {
+    text-decoration: underline
+}
+
+#topBar .right {
+    position: absolute;
+    top: 0;
+    right: 0
+}
+
+#topBar .user {
+    float: left;
+    position: relative
+}
+
+#topBar .lang-switcher {
+    float: left;
+    position: relative
+}
+
+#topBar .lang-switcher span {
+    display: block;
+    color: white;
+    color: #e2e2e2;
+    padding-right: 10px;
+    padding-left: 10px;
+    cursor: pointer;
+    height: 33px
+}
+
+#topBar .user span {
+    display: block;
+    color: white;
+    color: #e2e2e2;
+    padding-right: 25px;
+    padding-left: 20px;
+    background: url(../../images/admin/user.png) right top no-repeat;
+    cursor: pointer;
+    height: 33px
+}
+
+#topBar .user span img, #topBar .lang-switcher span img {
+    vertical-align: middle
+}
+
+#topBar .user span:hover, #topBar .openUser span, #topBar .lang-switcher:hover span
+    {
+    background-color: #f1f1f1;
+    color: #0fa7d9;
+    padding-bottom: 1px;
+    background-position: right bottom
+}
+
+#topBar .lang-switcher ul {
+    display: none
+}
+
+#topBar .user ul, #topBar .lang-switcher:hover ul {
+    position: absolute;
+    top: 33px;
+    right: 0;
+    width: auto;
+    line-height: 33px;
+    width: 190px;
+    display: none;
+    -moz-box-shadow: -2px 5px 5px #aaa;
+    -webkit-box-shadow: -2px 5px 5px #aaa;
+    box-shadow: -2px 5px 5px #aaa;
+    list-style: none;
+    background: #f1f1f1
+}
+
+#topBar .lang-switcher:hover ul {
+    display: block;
+    min-width: 100%;
+    width: auto;
+    text-align: right
+}
+
+#topBar .lang-switcher ul a {
+    display: block;
+    padding-right: 10px;
+    white-space: nowrap;
+    padding-left: 10px;
+    color: #1c1c1c;
+    text-decoration: none;
+    position: relative
+}
+
+#topBar .openUser ul {
+    display: block
+}
+
+#topBar .user a {
+    display: block;
+    padding-left: 20px;
+    color: #1c1c1c;
+    text-decoration: none
+}
+
+#topBar .user a:hover, #topBar .lang-switcher a:hover {
+    background: #e1e1e1
+}
+
+#sidebarWrapper {
+    width: 237px;
+    position: absolute;
+    top: 33px;
+    left: 0;
+    height: 100%;
+    background: #343434;
+    margin-bottom: -10000px;
+    padding-bottom: 10000px
+}
+
+#contentWrapper {
+    background: #f6f6f6;
+    height: 100%;
+    margin-bottom: -10000px;
+    padding-bottom: 10000px
+}
+
+#sidebar {
+    padding-top: 0;
+    position: relative
+}
+
+#content {
+    margin-left: 237px;
+    padding: 4px
+}
+
+#sidebar .logoTop {
+    height: 70px;
+    background: #343434 url(../../images/admin/smallTop.png) center center
+        no-repeat;
+    padding-right: 25px;
+    margin: 0 auto;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #222;
+    display: block
+}
+
+.logoBottom {
+    display: block;
+    height: 82px;
+    width: 241px;
+    background: url(../../images/admin/creator_panel.png) no-repeat center
+        center;
+    position: absolute;
+    bottom: 0;
+    left: 0
+}
+
+#menu {
+    padding-bottom: 80px;
+    border-top: 1px solid #404040
+}
+
+#menu li {
+    list-style: none
+}
+
+#menu ul ul {
+    display: none
+}
+
+#menu .open ul {
+    display: block
+}
+
+#menu .l1 {
+    list-style: none;
+    border-bottom: 1px solid #222;
+    background: #262626
+}
+
+#menu .l1a {
+    color: #ccc;
+    line-height: 35px;
+    text-decoration: none;
+    padding-left: 33px;
+    font-weight: bold;
+    display: block;
+    text-decoration: none;
+    background: #292929 url(../../images/admin/menu.png) left bottom
+        repeat-x;
+    border-bottom: 1px solid #404040;
+    position: relative
+}
+
+#menu .l1a:hover {
+    color: white
+}
+
+#menu .open .l1a {
+    color: white;
+    background: #1c1c1c;
+    border-bottom: 2px solid #27b7f9
+}
+
+#menu .second {
+    background: #414141;
+    border-bottom: 1px solid #404040;
+    padding: 18px 4px;
+    padding-right: 0
+}
+
+#menu .second a {
+    display: block;
+    color: #ccc;
+    padding-left: 21px;
+    text-decoration: none;
+    line-height: 24px;
+    margin: 1px 0;
+    margin-left: 4px
+}
+
+#menu .second .active a, #menu .second a:hover {
+    background: #282828;
+    color: white
+}
+
+#menu .l1a img {
+    position: absolute;
+    top: 9px;
+    left: 10px
+}
+
+.box {
+    padding: 20px;
+    padding-top: 0
+}
+
+h1 {
+    height: 33px;
+    line-height: 33px;
+    color: #393939;
+    font-size: 12px;
+    text-indent: 14px;
+    text-shadow: #fff 1px 1px 0;
+    background: #e5e5e5;
+    border-bottom: 2px solid #ccc;
+    margin: 30px -20px;
+    margin-top: -1px
+}
+
+p.field {
+    padding-bottom: 10px;
+    clear: both;
+    position: relative
+}
+
+.btns img {
+    vertical-align: middle;
+}
+
+.control-label {
+    display: block;
+    color: #2a2a2a;
+    padding-bottom: 5px;
+    top: 0;
+    left: 0;
+    padding-top: 3px
+}
+
+legend img {
+    vertical-align: middle;
+}
+
+legend .control-label {
+    display: inline;
+}
+
+.bool span.label {
+    display: inline;
+    cursor: pointer
+}
+
+.form-group {
+    padding: 10px;
+}
+
+.form-control {
+    width: 661px;
+    padding: 9px;
+    color: #2a2a2a;
+    padding-right: 30px;
+    background: white;
+    border: 1px solid #dfdfdf
+}
+
+.form-inline .form-control {
+    width: 308px;
+}
+
+textarea {
+    height: 200px;
+}
+
+.form-control:focus, textarea:focus {
+    background: white url(../images/user_edit.png) 670px 9px no-repeat;
+    border-color: #afafaf
+}
+
+.ckeditor .label {
+    float: none;
+    position: absolute;
+    top: 0;
+    left: 0
+}
+
+.ckeditor {
+    padding-left: 140px
+}
+
+.field select {
+    border: 1px solid #bdbdbd;
+    padding: 2px 5px;
+    color: #2a2a2a;
+    border-radius: 3px;
+    -moz-border-radius: 3px
+}
+
+span.field {
+    float: left;
+    padding-bottom: 8px
+}
+
+p.field {
+    clear: both
+}
+
+.error-message {
+    color: #8a0d00;
+    display: block;
+    font-weight: normal;
+    line-height: 1.5em;
+    clear: both;
+    padding-left: 10px
+}
+
+p.error .field input, p.error .field textarea {
+    border-color: #8a0d00
+}
+
+.alert {
+    padding: 20px;
+    font-size: 14px
+}
+
+.ui-widget {
+    margin-bottom: 10px
+}
+
+p {
+    padding-bottom: 15px
+}
+
+.alink {
+    padding-left: 24px;
+    position: relative;
+    margin-right: 10px
+}
+
+.alink img {
+    position: absolute;
+    top: 0;
+    left: 0
+}
+
+.checkboxes .field, .radios .field label {
+    padding-top: 5px;
+    width: auto;
+    display: block
+}
+
+.checkbox {
+    display: block;
+    padding: 3px 0
+}
+
+p.checkboxes span.checkbox {
+    padding-left: 20px;
+    display: block
+}
+
+.checkboxes input {
+    width: auto
+}
+
+form h2 {
+    padding: 5px 0;
+    clear: both;
+    border-bottom: 1px solid silver;
+    margin-bottom: 8px
+}
+
+.ui-timepicker-div .ui-widget-header {
+    margin-bottom: 8px
+}
+
+.ui-timepicker-div dl {
+    text-align: left
+}
+
+.ui-timepicker-div dl dt {
+    height: 25px
+}
+
+.ui-timepicker-div dl dd {
+    margin: -25px 0 10px 65px
+}
+
+.ui-timepicker-div td {
+    font-size: 90%
+}
+
+.checkboxes .field {
+    float: left
+}
+
+.checkboxes .checkbox {
+    display: block;
+    padding-bottom: 8px
+}
+
+.text ul, .text ol {
+    padding-left: 20px
+}
+
+#form #tab {
+    padding: 5px;
+    border-bottom: 1px solid silver;
+    height: 20px;
+    margin-bottom: 5px;
+    padding-bottom: 0
+}
+
+#form #tab span {
+    display: block;
+    float: left;
+    padding: 0 10px;
+    font-size: 12px;
+    height: 21px;
+    line-height: 21px;
+    cursor: pointer;
+    background: #ccc;
+    margin-right: 1px
+}
+
+#form #tab span:hover {
+    text-decoration: underline
+}
+
+#form #tab span.active {
+    font-weight: bold;
+    color: white;
+    background: #414141
+}
+
+#form form .group {
+    padding: 10px
+}
+
+#form .group h2 {
+    display: none
+}
+
+.form_tree {
+    float: left;
+    display: block
+}
+
+.form_tree li {
+    list-style: none;
+    padding: 4px 0;
+    padding-left: 20px
+}
+
+.form_tree .folder {
+    display: block;
+    float: left;
+    width: 15px;
+    margin-left: -5px;
+    height: 18px;
+    margin-right: 10px;
+    background: url(../../images/admin/page/folder.gif) no-repeat center
+        center;
+    cursor: pointer;
+    opacity: .4
+}
+
+.form_tree .open {
+    opacity: 1.0
+}
+
+form h3 {
+    border-bottom: 1px solid lightGrey;
+    line-height: 25px;
+    padding-left: 5px
+}
+
+.ui-jqgrid-bdiv tbody img {
+    vertical-align: middle
+}
+
+.ui-jqgrid-bdiv tbody td {
+    line-height: 22px
+}
+
+.dashboard {
+    margin: -5px;
+}
+
+.dashboard a {
+    display: block;
+    float: left;
+    margin: 5px;
+    padding: 10px;
+    text-align: center;
+    width: 128px;
+    height: 160px;
+    line-height: 20px;
+    color: #2a2a2a;
+    text-shadow: white 1px 1px 0px;
+    text-decoration: none;
+}
+
+.dashboard a:hover {
+    background: #e7e7e7;
+}
+
+.dashboard a img {
+    display: block;
+}
+
+#nodeList {
+    margin: 0
+}
+
+#nodeList .head {
+    height: 27px;
+    color: #5b5b5b;
+    line-height: 27px;
+    position: relative;
+    background: url(../../images/page/head.gif) repeat-x;
+    font-weight: bold
+}
+
+#nodeList .head .tit {
+    display: block;
+    padding-left: 15px
+}
+
+#nodeList .head .act {
+    position: absolute;
+    display: block;
+    top: 0;
+    right: 0;
+    width: 180px
+}
+
+#nodeList .bottom {
+    margin-top: -1px
+}
+
+#nodeList li {
+    list-style: none
+}
+
+#nodeList ol {
+    border-bottom: 5px solid #eee;
+    border-top: 1px solid #d7d7d7
+}
+
+#nodeList ol ol {
+    padding-left: 20px;
+    border-left: 1px dashed #eee;
+    margin-top: 0
+}
+
+#nodeList ol div {
+    padding-left: 10px;
+    line-height: 25px;
+    border: 1px solid #d7d7d7;
+    border-top: 0 solid;
+    color: #5b5b5b;
+    cursor: move;
+    background: white;
+    position: relative
+}
+
+#nodeList li div:hover {
+    background: #ececec
+}
+
+#nodeList li .actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    width: 180px
+}
+
+#nodeList img {
+    vertical-align: middle
+}
+
+#nodeList a {
+    color: #5b5b5b;
+    text-decoration: none
+}
+
+#nodeList a:hover {
+    color: black
+}
+
+#nodeList .drag {
+    display: block;
+    float: left;
+    width: 9px;
+    height: 25px;
+    margin-right: 10px;
+    background: url(../../images/page/drag.gif) no-repeat center center;
+    cursor: pointer
+}
+
+#nodeList .folder {
+    display: block;
+    float: left;
+    width: 15px;
+    margin-left: -5px;
+    height: 25px;
+    margin-right: 10px;
+    background: url(../../images/page/folder.gif) no-repeat center center;
+    cursor: pointer;
+    opacity: .4
+}
+
+#nodeList .btt {
+    padding: 20px;
+    padding-bottom: 20px;
+    text-align: right
+}
+
+#nodeList .admin {
+    position: absolute;
+    top: 0;
+    right: 20px
+}
+
+#nodeList .admin a {
+    text-decoration: underline;
+    margin-left: 10px
+}
+
+#nodeList .admin img {
+    margin-right: 5px
+}
+
+#nodeList .folderClose {
+    opacity: 1
+}
+
+#nodeList .ui-nestedSortable-error {
+    background: #fbc2c4
+}
+
+.ui-sortable-helper {
+    background: white;
+}
+
+.upload-wrap {
+    position: relative;
+}
+
+.upload-wrap .upload {
+    opacity: 0;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.gallery-item {
+    border: 1px solid lightGrey;
+    padding: 4px;
+    background: white;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    cursor: move;
+    position: relative;
+}
+
+.gallery-item .close {
+    display: block;
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    width: 16px;
+    height: 16px;
+    z-index: 4;
+    background: url(../images/ico/16/delete.png);
+    cursor: pointer;
+}
+
+.gallery-item .ph {
+    display: block;
+    background: #f1f1f1 url(.) center center no-repeat;
+    background-image: url(".");
+    width: 150px;
+    height: 150px;
+    margin-bottom: 2px;
+}
+
+.gallery-item input {
+    width: 140px;
+    padding: 4px;
+}
+.gallery-item .form-group {
+    padding: 0px;
+}

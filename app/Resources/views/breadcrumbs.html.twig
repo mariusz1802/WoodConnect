@@ -1,0 +1,13 @@
+<div id="breadcrumbs">
+<div class="wrap">
+<ol>
+{% for breadcrumb_item in path %}
+	{% if loop.first %}
+    {% else %}
+    <li><a href="{{ breadcrumb_item.uri }}">{{ breadcrumb_item.label }} </a></li>
+    
+    {% endif %}
+{% endfor %}
+</ol>
+</div>
+</div>

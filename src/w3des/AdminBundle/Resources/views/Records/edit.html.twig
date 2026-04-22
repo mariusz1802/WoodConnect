@@ -1,0 +1,19 @@
+{% extends 'w3desAdminBundle::layout.html.twig' %}
+{% trans_default_domain "admin" %}
+{% block page_title %}
+Edycja 
+{% endblock %}
+{% block content %}
+<h1>
+    {{ block('page_title') }}
+</h1>
+
+<div id="form">
+{{ form_start(form) }}
+    <input class="submit" type="submit" name="" value="zapisz"/>
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+    <input class="submit" type="submit" name="" value="zapisz"/>
+ {{ form_end(form) }}   
+ </div>
+{% endblock %}

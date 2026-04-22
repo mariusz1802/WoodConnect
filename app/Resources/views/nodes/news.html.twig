@@ -1,0 +1,28 @@
+<section class="news-list">
+    <div class="wrap">
+        {% set nodes = load_nodes(type|default('news'), {
+            orderBy : { 'publishDate' : 'desc' },
+            where : {
+                public : true
+            },
+            max : 4,
+            pagging: true,
+            page : app.request.query.get('page', 1)
+        }) %}
+        {% for node in nodes.list  %}
+            {% if loop.index0 % 2 == 0 %}
+            <div class="clear-fix"></div>
+            {% endif %}
+            <article class="news-article">
+                <h4>
+                    {{ node|variable('title') }}
+                </h4>
+                <span class="date">{{  node|variable('publishDate')|date('d.m.Y') }}</span>
+                <p>{{ node|variable('lead') }}</p>
+                <a href="{{ node|url }}" class="more">więcej</a>
+            </article>
+        {% endfor %}
+        {% include 'nodes/pagging.html.twig' with nodes %}
+        <div class="clear-fix"></div>
+    </div>
+</section>

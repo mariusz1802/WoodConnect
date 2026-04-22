@@ -1,0 +1,36 @@
+<div class="gallery gallery-type-{{ type|default(1) }}">
+    
+    <div class="bg">
+        <div class="wrap">
+        		<h2><span>{{ mod|variable('title')|default('Galeria zdjęć / multimediów') }}</span></h2>
+            {%spaceless%}
+            {% for item in items %}
+            {% set url = item|variable('url') %}
+            <a href="{%spaceless%}{% if item|variable('url') %}
+                {% if 'youtube' in url|lower or 'youtu.be' in url|lower %}
+                    {% set url= url|youtube_embed %}
+                {% endif %}
+                {{ url }}
+            {%else%}
+                {{ asset(_upload~item|variable('photo').path) }}
+            {% endif %}{% endspaceless %}" data-rel="gallery:{{ mod.id }}" title="{{ item|variable('title') }}">
+            <span class="w">
+            <img src="{{ (_upload~ item|variable('photo').path)|imagine_filter('gallery') }}" />
+            <span class="scale" style="background-image: url({{ (_upload~ item|variable('photo').path)|imagine_filter('gallery') }})"></span>
+             {% if 'youtube' in url|lower %}
+             <span class="video"></span>
+                {% endif %}
+            </span>
+                {% if type == 3 %}
+                <span class="tit">
+                	  <span class="tit1">{{ item|variable('title') }}</span>
+                	  <span class="tit2">{{ item|variable('title2') }}</span>
+                </span>
+                {%endif%}
+            </a>
+            {% endfor %}
+            {%endspaceless%}
+            <div class="clear-fix"></div>
+        </div>
+    </div>
+</div>

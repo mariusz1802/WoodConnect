@@ -1,0 +1,39 @@
+<section class="contact-form wrap" id="contact{{ module.id }}">
+    <h2 id="contact-form">Formularz kontaktowy</h2>
+    <div class="bg">
+    {% if app.session.flashbag.has('info' ~ module.id) %}
+        {% for flash in app.session.flashbag.get('info' ~ module.id) %}
+            <div class="info-box" id="contact-info-{{ module.id }}">
+                {{ flash }}
+            </div>
+        {% endfor %}
+    {% else %}    
+    
+    {{ form_start(form) }}
+    <input type="hidden" name="_module" value="{{ module.id }}" />
+    {{ form_errors(form) }}
+    
+    <div class="row">
+        {{ form_row(form.name) }}
+        {{ form_row(form.email) }}
+    </div>
+    
+    <div class="row">
+        {{ form_row(form.phone) }}
+        {{ form_row(form.subject) }}
+    </div>
+    
+    <div class="row double-row">
+        {{ form_row(form.content) }}
+    </div>
+    <div class="clear-fix"></div>
+    
+    <div class="btns">
+    		<div style="float:left;">{{ form_widget(form.recaptcha) }}</div>
+        <input class="submit" type="submit" name="" class="submit" value="wyślij"/>
+    </div>
+    {{ form_end(form) }} 
+ {% endif %}
+    <div class="clear-fix"></div>
+ </div>
+</section>

@@ -1,0 +1,284 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+/* latin-ext */
+@font-face {
+  font-family: 'Oxygen';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Oxygen Light'), local('Oxygen-Light'), url('fonts/Oxygen-300-latin-ext1.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Oxygen';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Oxygen Light'), local('Oxygen-Light'), url('fonts/Oxygen-300-latin2.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Oxygen';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Oxygen Regular'), local('Oxygen-Regular'), url('fonts/Oxygen-400-latin-ext3.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Oxygen';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Oxygen Regular'), local('Oxygen-Regular'), url('fonts/Oxygen-400-latin4.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Oxygen';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Oxygen Bold'), local('Oxygen-Bold'), url('fonts/Oxygen-700-latin-ext5.woff2') format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Oxygen';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Oxygen Bold'), local('Oxygen-Bold'), url('fonts/Oxygen-700-latin6.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+
+/* cyrillic-ext */
+
+input[type=text], input[type=email], textarea {
+    -webkit-appearance: none;
+    border-radius:0px;
+    outline: none;
+}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
+    blockquote, pre, a, abbr, acronym, address, big, cite, code, del,
+    dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup,
+    tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form,
+    label, legend, caption, article, aside, canvas, details, embed,
+    figure, figcaption, footer, header, hgroup, menu, nav, output, ruby,
+    section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup,
+    menu, nav, section {
+    display: block;
+}
+
+body {
+    line-height: 1.1em;
+    font-family: "Oxygen", "Trebuchet Ms";
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
+
+.clearFix, .clear-fix {
+    clear: both;
+    display: block;
+}
+
+html, body {
+    font-size: 13px;
+    color: #757575;
+    font-family: "Oxygen";
+}
+.text {
+    font-size :20px;
+    font-weight: 300;
+    color: #3c4a4f;
+    line-height: 1.3em;
+}
+.text-content {
+    text-align: left;
+}
+.home-content {
+    text-align: left;
+}
+.home-content h1 {
+    font-size: 48px;
+    color: #515151;
+    text-align: left;
+    font-weight: 300;
+    margin-bottom: 10px;
+    padding: 0px;
+    text-transform: uppercase;
+    line-height: 1.0em;
+}
+.home-content h1 strong {
+    color: black;
+    font-weight: 300;
+}
+body.text {
+    background: #fff;
+    padding: 20px;
+}
+
+#footer p {
+    padding: 0px;
+}
+
+.text,.MsoNormal, .content p, .content ul {
+    line-height: 1.3em;
+    font-size: 20px;
+    color: #2f2f2f;
+    font-family: "Oxygen", "Trebuchet Ms";
+    font-weight: 300;
+	padding-top: 30px;
+}
+
+h1, h2, h3 {
+    font-size: 24px;
+    padding-bottom: 10px;
+    font-weight: normal;
+    color: #e2001a;
+    font-family: "Oxygen";
+    font-style: normal;
+    line-height: 1.4em;
+}
+h1 {
+    font-size: 55px;
+    font-weight: 300;
+    color: #444444;
+    margin-bottom: 30px;
+    line-height: 1em;
+}
+h2 {
+    font-size: 30px;
+    font-weight: 300;
+    color: #515151;
+    padding-bottom: 10px;
+    padding-top: 5px;
+    text-align: center;
+}
+
+.text img {
+    max-width: 80%;
+}
+
+
+.text p, .text ul, .text ol, .content ul, .content ol {
+    padding: 5px 0px;
+}
+
+.text ul, .text ol, .content ul, content ol {
+    padding-left: 0px;
+}
+
+.text ul, .content ul {
+    list-style: square;
+    list-style-position: inside;
+}
+
+.text ol, .content ol {
+    list-style: decimal;
+    list-style-position: inside;
+}
+
+.text ul li, .text ol li, .content ul li, content ol li {
+    padding-left: 0px;
+}
+
+.home-content {
+    color: #444444;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.5em;
+}
+.home-content p, .home-content ul, .home-content ol {
+    padding-bottom: 20px;
+}
+.offer-content {
+    color: #292929;
+    font-size: 15px;
+    font-weight: 300;
+}
+.offer-content h2 {
+    line-height: 1.0em;
+}
+a {
+    color: #428eb6;
+    text-decoration: none;
+}
+.text table {
+    min-width: 100%;
+}
+.niceTable {
+    width: 100%;
+    border: 0px solid !important;
+    border-collapse: collapse;
+}
+
+.niceTable th {
+    color: #474747;
+    font-size: 14px;
+    padding: 5px;
+    border-bottom: 1px solid silver;
+}
+
+.niceTable td {
+    padding: 5px;
+    border-bottom: 1px solid silver;
+}
+
+.niceTable .center {
+    text-align: center;
+}
+
+.niceTable .bor {
+    border: 1px solid silver;
+}
+
+.niceTable strong {
+    font-weight: bold;
+}
+
+strong {
+    font-weight: bold;
+}
+
+em {
+    font-style: italic;
+}
+
+
+.footer-content {
+    font-size: 14px;
+    background: black;
+    padding: 30px 0px;
+    color: #828282;
+}
+body.footer-content {
+    background: #00283e !important;
+}
+.quick-contact-content {
+    font-size: 14px;
+    font-weight: normal;
+    color: black;
+    line-height: 1.1em;
+}

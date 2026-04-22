@@ -1,0 +1,17 @@
+<div class="gallery gallery-design">
+    <h2>Galeria zdjęć</h2>
+    {% set size = 0 %}
+    {% for item in items %}
+        {% set size = size + (item.type == 'h' ? 476 : 238) %}
+    {% endfor %}
+    <div class="gallery-wrap">
+        <div class="gallery-slide" style="width: {{ size }}px">
+        {% for item in items %}
+            <div class="row row-{{ item.type }}">
+                {% include 'nodes/gallery_row.html.twig' with { item : item.items, mod : mod} %}
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    <div class="clear-fix"></div>
+</div>

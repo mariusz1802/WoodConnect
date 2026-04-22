@@ -1,0 +1,136 @@
+{% extends 'w3desAdminBundle::layout.html.twig' %}
+{% trans_default_domain "admin" %}
+{% block page_title %}
+{{ ('node.'~type)|trans }}
+{% endblock %}
+{% block content %}
+<h1>
+    {{ block('page_title') }}
+</h1>
+<p>
+    <a href="{{ url('admin.node.add', { type: type }) }}"><img src="{{ asset('bundles/w3desadmin/images/ico/16/add.png') }}" /> Dodaj</a>
+    {% if not cfg.sortable %}
+    <div id="grid"></div>
+    {% else %}
+    <form action="{{ url('admin.node', {type : type}) }}" method="post" id="sort_form" accept-charset="utf-8">
+    <input class="submit" type="submit" name="" value="zapisz"/>
+    <div id="nodeList">
+        {% include 'w3desAdminBundle:Nodes:sortable.html.twig' with { items : items, level : 1, cfg : cfg, type : type, fields : fields } %}
+    </div>
+    
+    <input class="submit" type="submit" name="" value="zapisz"/>
+    </form>
+    {% endif %}
+</p>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+{% if not cfg.sortable %}
+<script type="text/javascript">
+$(function() {
+    $('#grid').jsGrid({
+        width: '100%',
+        filtering: true,
+        sorting: true,
+        paging: true,
+        editing: true,
+        autoload: true,
+        deleteConfirm: function(item) {
+            return "Czy na pewno chcesz to zrobić?";
+        },
+        onItemEditing : function(args) {
+            window.location = '{{url("admin.node.edit", { type : type, id : '@id@' })|raw}}'.replace(/@id@/g, args.item.id);
+            args.cancel = true;
+        },
+        onItemEditing : function(args) {
+            window.location = '{{url("admin.node.edit", { type : type, id : '@id@' })|raw}}'.replace(/@id@/g, args.item.id);
+            args.cancel = true;
+        },
+        onItemDeleted : function(args) {
+            window.location = '{{url("admin.node.remove", { type : type, id : '@id@' })|raw}}'.replace(/@id@/g, args.item.id);
+            args.cancel = true;
+        },
+        pageLoading: true,
+        controller : {
+            loadData : function(filter) {
+                var d = jQuery.Deferred();
+                $.ajax({
+                    url : '{{url("admin.node.json", {type : type})}}',
+                    dataType : 'json',
+                    data : filter
+                }).done(function(response) {
+                    d.resolve(response);
+                });
+
+                return d.promise();
+            }
+        },
+        fields : [
+            {% for fieldName in cfg.grid %}
+            {% set type = fields[fieldName].storeType %}
+            {% if type == 'string' %}
+                {% set type = 'text' %}
+            {% elseif type == 'bool' %}
+                {% set type='checkbox' %}
+            {% endif %}
+            {name : '{{fieldName}}',title : '{{('node.field.'~fieldName)|trans}}', type : '{{type}}'},
+            {% endfor %}
+            {type : 'control'}
+        ]
+    });
+});
+
+</script>
+{% else %}
+<script type="text/javascript">
+
+
+$(function() {
+    $('.sortable:eq(0)').nestedSortable({
+        disableNesting: 'no-nest',
+        forcePlaceholderSize: true,
+        hadle: 'div',
+        helper: 'clone',
+        items: 'li', 
+        maxLevels: 0,
+        opacity: 0.6,
+        placeholder: 'placeholder',
+        revert: 250,
+        tabSize: 25,
+        tolerance: 'pointer',
+        toleranceElement: 'div'
+    });
+    $('#sort_form').submit(function() {
+        var serialized = $('.sortable:eq(0)').nestedSortable('toHierarchy');
+        var i = 0;
+        var tree_flat = function(tree, path, parent) {
+            if(!path) {
+                path = '/';
+            }
+            if(!parent) {
+                parent = 'null';
+            }
+                    
+            for(el in tree) {
+                        
+                $('#sort_form').append('<input type="hidden" name="tree[' + i + '][path]" value="' + path + '" />');
+                $('#sort_form').append('<input type="hidden" name="tree[' + i + '][pos]" value="' + el + '" />');
+                $('#sort_form').append('<input type="hidden" name="tree[' + i + '][parent]" value="' + parent + '" />');
+                $('#sort_form').append('<input type="hidden" name="tree[' + i + '][id]" value="' + tree[el].id + '" />');
+                i++;
+                if(tree[el].children) {
+                    tree_flat(tree[el].children, path+tree[el].id + '/', tree[el].id);
+                }
+            }
+        }
+        $('#sort_form input[type=hidden]').remove();
+        tree_flat(serialized);
+        return true;
+         
+    });
+});
+</script>
+
+</script>
+{% endif %}
+{% endblock %}

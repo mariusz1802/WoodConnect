@@ -1,0 +1,103 @@
+{% spaceless %}<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<meta name="robots" content="index, follow" />
+<meta name="description" content="{% block meta_description %}{{ sett('home_meta_description') }}{% endblock %}" />
+<meta name="keywords" content="{% block meta_keywords %}{{ sett('home_meta_keywords') }}{% endblock %}" />
+<meta name="google-site-verification" content="QHM650oFXHSXtYMYLMwCOae7iWfkKMObwSoNZohFCOg" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>{% block title %}{{ sett('home_meta_title') }}{% endblock %}</title>
+{% stylesheets 'css/content.css'
+                'css/jquery.nivo.css'
+                'css/lightcase.css'
+                'css/page.css'
+                filter='cssrewrite,?uglifycss' output='css/compiled/page.css' %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+<script type="text/javascript">var postStart = []</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-M3CNDNN');</script>
+<!-- End Google Tag Manager -->
+</head>
+<body class="{% block body_class %}{% endblock %}">
+    <div id="outer">
+        <header>
+            <div class="wrap">
+                <a href="{{ url('homepage') }}" class="logo"></a>
+                <menu>
+                    {{ knp_menu_render({menu: 'app.menu'}, {depth : 2, 'template' : '::menu.html.twig'}) }}
+                    <li class="search-container"><a href="#" class="search"><span></span></a><form method="get" action="{{ url('search') }}"><input type="text" placeholder="Szukaj" name="query" /></form></li>
+                </menu>
+                <a href="#" class="open-menu"><span></span><span></span><span></span></a>
+            </div>
+        </header>
+        <div class="header-holder"></div>
+        {% block top %}{%  include '::slider.html.twig'%}{% endblock %}
+        <div id="cnt">
+        {% block body %}{% endblock %}
+        {% if app.session.flashbag.has('info') %}
+        {% for flash in app.session.flashbag.get('info') %}
+            <div class="info-box" id="inf-box">
+                {{ flash }}
+            </div>
+        {% endfor %}
+        {% endif %}  
+        </div>
+        <div id="footer-holder"></div>
+        <footer>
+            <div class="up">
+                <div class="wrap">
+                	 	<div class="foot-text">
+                    {{ sett('footer')|raw }}
+                    </div>
+					<nav>
+                        {{ knp_menu_render({menu: 'app.menu'}, {depth : 1}) }}
+                    </nav>
+                    <div class="dev">
+                        <a href="http://grupa-paradox.com.pl" target="_BLANK"><img src="{{ asset('images/paradox.png') }}"></a>
+                    </div>
+                   
+                    
+                    <div class="clear-fix"></div>
+                </div>
+            </div>
+            <div class="down">
+                <div class="wrap footer-content">
+				    
+                </div>
+            </div>
+
+        </footer>
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M3CNDNN" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+    </div>
+    {% javascripts 'js/jquery.js'
+                    'js/jquery.nivo.js'
+                    'js/jquery.mousewheel.js'
+                    'js/lightcase.js'
+                    'js/page.js'
+                filter='?uglifyjs2' output='js/compiled/page.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    {{sett('analytics')|raw}}
+   
+    {% if sett('popup') and app.request.cookies.get('visited') != sett('popup').path %}
+        <div id="popup">
+            <div id="lightcase-overlay" style="opacity: 0.9; display: block; cursor: pointer;"></div>
+        
+        <div id="lightcase-nav"><a href="#" onclick="javascript:$('#popup').remove();" class="lightcase-icon-close" style="opacity: 1;"><span>Close</span></a>
+        </div>
+        <div id="popup-item" {% if sett('popup').width > 0 %}style="height: {{ sett('popup').height }}px"{% endif %}>
+            <a href="{{ sett('popup_url') }}" target="_BLANK" rel="nofollow"><img src="{{ asset(_upload~sett('popup').path) }}" alt="" /></a>
+        </div>
+        </div>
+        {% endif %}
+</body>
+</html>{% endspaceless %}

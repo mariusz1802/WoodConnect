@@ -1,0 +1,71 @@
+{% extends '::base.html.twig' %}
+{% block top %}
+{% endblock %}
+{% block body %}
+<section class="contact-form login-form wrap" id="login">
+    <div class="bg">
+        <div class="text">
+            <p class="info" style="text-align: center;">By uzyskać dostęp do katalogu produktów, zaloguj się lub zarejestruj na stronie <br /><br /></p>
+        </div>
+        <div class="wrap form">
+            <div class="row">
+                {% block left %}
+                <form action="{{ path('login') }}" method="post">
+                    <h2>Logowanie</h2>
+                    {% if error %}
+                        <div class="err">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+                    <div class="form-group">
+                        <label class="control-label" for="username">Email</label>
+                        <input type="text" id="username" class="form-control" name="_username" value="{{ last_username }}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="password" >Hasło</label>
+                        <input type="password" id="password" class="form-control" name="_password" />
+                    </div>
+                    <input type="hidden" name="_target_path" value="{{ referer }}" />
+                    <p><a href="{{ url('remind.password') }}">Przypomnij hasło</a></p>
+                    <div class="btns">
+                        <input type="submit" value="zaloguj" class="submit" />
+                    </div>
+                </form>
+                {% endblock %}
+            </div>
+            <div class="line"></div>
+            <div class="row">
+                {{ form_start(registerForm, {action :  path('register')}) }}
+                    <h2>Rejestracja</h2>
+                    <input type="hidden" name="_target_path" value="{{ referer }}" />
+                    <div class="form">
+                        <div class="row">
+                            {{ form_row(registerForm.firstName) }}
+                        </div>
+                        <div class="row">
+                            {{ form_row(registerForm.lastName) }}
+                        </div>
+                    </div>
+                    {{ form_row(registerForm.phone) }}
+                    {{ form_row(registerForm.email) }}
+                    <p>Aby zarejestrować konto wybierz hasło:</p>
+                    <p>&nbsp;</p>
+                    <div class="form">
+                        <div class="row">
+                            {{ form_row(registerForm.plainPassword.first) }}
+                        </div>
+                        <div class="row">
+                            {{ form_row(registerForm.plainPassword.second) }}
+                        </div>
+                    </div>
+                    <p>Dane gromadzone są wyłącznie w celach statystycznych oraz po to by dopasować dla Państwa najlepszą ofertę, zgodnie z aktualnymi promocjami. Firma Optident M. Foubert, D. Stój S. J. nie przekazuje zebranych informacji żadnym zewnętrznym podmiotom.</p>
+                    <div class="btns">
+                        <input type="submit" value="zapisz" class="submit" />
+                    </div>
+                    <p>* - pole wymagane</p>
+                    {{ form_end(registerForm) }}
+                
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+{% block page_title %}Logowanie{% endblock %}

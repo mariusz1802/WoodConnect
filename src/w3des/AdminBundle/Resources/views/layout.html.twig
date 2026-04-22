@@ -1,0 +1,81 @@
+{% extends 'w3desAdminBundle::base.html.twig' %}
+{% trans_default_domain "admin" %}
+{% block page_title %}
+Panel administracyjny
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+{% javascripts 'bundles/w3desadmin/js/jquery.js' 'bundles/w3desadmin/js/jquery-ui.min.js' 'bundles/w3desadmin/js/jquery.nested.js' 'bundles/w3desadmin/jsgrid/jsgrid.js' 'bundles/w3desadmin/js/jquery.timepicker.js' 
+'bundles/w3desadmin/upload/js/jquery.iframe-transport.js' 'bundles/w3desadmin/upload/js/jquery.fileupload.js' 
+'bundles/w3desadmin/js/panel.js' 
+                filter='?uglifyjs2' output='js/compiled/admin_panel.js' %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+{% endblock %}
+
+{% block stylesheets %}
+{% stylesheets 'bundles/w3desadmin/css/panel.css' 'bundles/w3desadmin/css/jquery-ui.css' 'bundles/w3desadmin/jsgrid/jsgrid.css' 'bundles/w3desadmin/jsgrid/jsgrid-theme.css' 'bundles/w3desadmin/css/jquery.timepicker.css' filter='cssrewrite,?uglifycss' output='css/compiled/admin_panel.css' %}
+<link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+{% endblock %}
+{% block body %}
+<body>
+    <div id="outer">
+        <div id="topBar">
+            <div class="domain">
+                Twoja strona : <a href="{{ url('homepage') }}" target="_BLANK">{{ app.request.host }}{{ app.request.basepath }}</a>
+            </div>
+            <div class="lang">
+                Obecnie edytowana jest wersja {{ ('locale.'~app.request.attributes.get('_page_locale'))|trans }} 
+                
+                <img src="{{ asset('bundles/w3desadmin/images/flag/'~app.request.attributes.get('_page_locale')~'.png') }}" /> 
+                {% if _locales|length > 1 %}
+                <span class="select"><span class="space">|</span>Wybierz wersję 
+                    {% for i in _locales %}
+                    <a href="{{ url('admin.lang', {lang : i}) }}">
+                    <img
+                        src="{{ asset('bundles/w3desadmin/images/flag/'~i~'.png') }}" alt="" /> {{ ('locale.'~i)|trans }} </a>
+                    {% endfor %}
+                    </span>
+                {% endif %}
+                
+            </div>
+            <div class="version">Wersja CMS: 4.0.0a &nbsp; &nbsp; &nbsp; Data na serwerze {{ "now"|date('d.m.Y H:i') }}</div>
+            <div class="right">
+
+                <div class="user">
+                    <span><img src="{{ asset('bundles/w3desadmin/images/ico/16/user_ninja.png') }}" /> admin</span>
+                    <ul>
+                        <li><a href="{{ url('admin.logout') }}"> {{ 'logout'|trans }} </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="sidebarWrapper">
+            <div id="sidebar">
+                <a class="logoTop" href="{{ url('admin.home') }}"></a>
+                <div id="menu">
+                    {{knp_menu_render('admin_menu', {template : 'w3desAdminBundle::menu.html.twig'}) }}
+                </div>
+
+
+            </div>
+        </div>
+        <div id="contentWrapper">
+            <div id="content">
+                <div class="box">
+                    {% for label, flashes in app.session.flashbag.all %}
+                        {% for flash in flashes %}
+                            <div class="alert alert-{{ label }}">
+                                {{ flash }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% block content %}{% endblock %}
+                </div>
+            </div>
+        </div>
+        <div class="clearFix"></div>
+
+    </div>
+    {% endblock %}

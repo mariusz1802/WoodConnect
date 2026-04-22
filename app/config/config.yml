@@ -1,0 +1,502 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: 'pl'
+    liip_imagine.jpegoptim.binary: '%jpegoptim%'
+    liip_imagine.pngquant.binary: '%pngquant%'
+    admin.locale: pl
+    admin.title: Woodconnect
+    page.default_locale: pl
+    page.locales: ['pl', 'en', 'de']
+    upload.dir: "%kernel.root_dir%/../web/uploads"
+    upload.path: "uploads" 
+    asset_version: v3
+liip_imagine:
+    driver: imagick
+    filter_sets:
+      cache: ~
+      admin:
+        quality: 75
+        filters:
+            thumbnail: { size: [150, 150], mode: "inset" }
+            background: { size: [150, 150], position: "center", color: "#ffffff" }
+      gallery:
+        quality: 75
+        filters:
+            thumbnail: { size: [228, 228], mode: "outbound" }
+            background: { size: [228, 228], position: "center", color: "#ffffff" }
+      product:
+        quality: 75
+        filters:
+            thumbnail: { size: [478, 480], mode: "outbound" }
+            background: { size: [478, 480], position: "center", color: "#000000" }
+      box_s:
+        quality: 75
+        filters:
+            thumbnail: { size: [960, 450], mode: "outbound" }
+            background: { size: [960, 450], position: "center", color: "#000000" }
+      box_b:
+        quality: 75
+        filters:
+            thumbnail: { size: [960, 450], mode: "outbound" }
+            background: { size: [960, 450], position: "center", color: "#000000" }
+      product_main:
+        quality: 75
+        filters:
+            thumbnail: { size: [620, 670], mode: "inset" }
+            background: { size: [620, 670], position: "center", color: "#ffffff" }
+
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    node: '%node%'
+    bundles:
+      - AppBundle
+      - w3desAdminBundle
+      
+    filters:
+        cssrewrite: ~
+        uglifyjs2: 
+          bin: '%uglifyjs%'
+        uglifycss: 
+          bin: '%uglifycss%'
+        sass: 
+          bin: '%sass%'
+          apply_to: '\.scss$'
+        compass: 
+          bin: '%compass%'
+
+framework:
+    #esi: ~
+    translator: { fallbacks: ['%locale%'] }
+    secret: '%secret%'
+    router:
+        resource: '%kernel.root_dir%/config/routing.yml'
+        strict_requirements: ~
+    form: ~
+    csrf_protection: ~
+    validation: { enable_annotations: true }
+    #serializer: { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    assets:
+        version: '%asset_version%'
+    default_locale: '%locale%'
+    trusted_hosts: ~
+    trusted_proxies: ~
+    session:
+        # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+        handler_id:  session.handler.native_file
+        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+        name: OPTIDENTSESS
+        storage_id: session.storage.native
+    fragments: ~
+    http_method_override: true
+    assets: ~
+    php_errors:
+        log: true
+
+# Twig Configuration
+twig:
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    globals:
+      _locales: '%page.locales%'
+      _admin_title: '%admin.title%'
+      _upload: "%upload.path%"
+    form_themes: ['bootstrap_3_layout.html.twig', 'w3desAdminBundle::form.html.twig']
+      
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver: pdo_mysql
+        host: '%database_host%'
+        port: '%database_port%'
+        dbname: '%database_name%'
+        user: '%database_user%'
+        password: '%database_password%'
+        charset: UTF8
+        options:
+          1002: "SET NAMES 'UTF8'"
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.root_dir%/../var/data/data.sqlite"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #path: '%database_path%'
+
+    orm:
+        auto_generate_proxy_classes: '%kernel.debug%'
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: '%mailer_transport%'
+    host: '%mailer_host%'
+    username: '%mailer_user%'
+    password: '%mailer_password%'
+    spool: { type: memory }
+    logging: false
+    
+w3des_admin:
+  nodes:
+    pages:
+      sortable: true
+      locale: true
+      redirect_empty: content
+      icon: 'edit'
+      url: title
+      title: title
+      enabled: true
+      maxDepth: 2
+      index: true
+      sections:
+        statics:
+          fields: 
+            public:
+              type: Symfony\Component\Form\Extension\Core\Type\CheckboxType
+              default: true
+            title: 
+              grid: true
+              index: true
+            url: ~
+            redirect: ~
+            over:
+              type: 'Symfony\Component\Form\Extension\Core\Type\ChoiceType'
+              storeType: string
+              default: dark
+              options:
+                label: Mouse over
+                empty_data: 'dark'
+                choices:
+                  Jasny: light
+                  Ciemny: dark
+            photo:
+              type: 'w3des\AdminBundle\Form\Type\AdvFileType'
+              options:
+                dir: 'page'
+              
+        content:
+          modules:
+            - { type: 'w3des\AdminBundle\NodeModule\ContentModule', default: true }
+            - { type: 'w3des\AdminBundle\NodeModule\MapModule', default: false }
+            - { type: 'w3des\AdminBundle\NodeModule\ListModule', default: false }
+            - { type: 'w3des\AdminBundle\NodeModule\ContactModule', default: false }
+            - { type: 'w3des\AdminBundle\NodeModule\ProductsModule', default: false }
+            - { type: 'w3des\AdminBundle\NodeModule\GalleryModule' }
+            - { type: 'w3des\AdminBundle\NodeModule\FileModule' }
+        top:
+          modules:
+            - { type: 'w3des\AdminBundle\NodeModule\SliderModule' }
+        seo:
+          fields: 
+            meta_title: ~
+            meta_keywords: 
+              type: 'Symfony\Component\Form\Extension\Core\Type\TextareaType'
+            meta_description:
+              type: 'Symfony\Component\Form\Extension\Core\Type\TextareaType'
+    category:
+      sortable: true
+      locale: true
+      icon: 'folder'
+      enabled: true
+      maxDepth: 3
+      title: title
+      sections:
+        statics:
+          fields: 
+            title: 
+              grid: true
+    image: 
+      enabled: false
+      sortable: true
+      locale: true
+      title: title
+      sections:
+        data:
+          fields: 
+            title: ~
+            url: 
+              options:
+                label_format: 'node.field.video_url'
+            photo:
+              type: 'w3des\AdminBundle\Form\Type\UploadedImageType'
+              options:
+                dir: 'image'
+    gallery_item: 
+      enabled: false
+      sortable: true
+      locale: true
+      title: title
+      sections:
+        data:
+          fields: 
+            title: ~
+            title2: 
+                options:
+                    label: 'Tytuł 2'
+            url: 
+              options:
+                label_format: 'node.field.video_url'
+            photo:
+              type: 'w3des\AdminBundle\Form\Type\UploadedImageType'
+              options:
+                dir: 'image'
+    file: 
+      enabled: false
+      sortable: true
+      locale: true
+      title: name
+      sections:
+        data:
+          fields: 
+            name: ~
+            file:
+              type: 'w3des\AdminBundle\Form\Type\UploadedImageType'
+              options:
+                dir: 'file'
+    product:
+      sortable: false
+      locale: true
+      icon: 'box'
+      url: title
+      enabled: true
+      title: title
+      index: true
+      sections:
+        statics:
+          fields: 
+            public:
+              type: Symfony\Component\Form\Extension\Core\Type\CheckboxType
+              default: true
+              grid: true
+            title: 
+              grid: true
+              index: true
+            url: ~
+            redirect: ~
+            category:
+              type: 'w3des\AdminBundle\Form\Type\NodeType'
+              options: 
+                type: category
+            over:
+              type: 'Symfony\Component\Form\Extension\Core\Type\ChoiceType'
+              storeType: string
+              default: dark
+              options:
+                label: Mouse over
+                empty_data: 'dark'
+                choices:
+                  Jasny: light
+                  Ciemny: dark
+            photo:
+              type: 'w3des\AdminBundle\Form\Type\AdvFileType'
+              options:
+                dir: 'product'
+        content:
+          modules:
+            - { type: 'w3des\AdminBundle\NodeModule\ContentModule', default: true }
+            - { type: 'w3des\AdminBundle\NodeModule\GalleryModule' }
+            - { type: 'w3des\AdminBundle\NodeModule\FileModule' }
+            - { type: 'w3des\AdminBundle\NodeModule\RecordsModule', default: false }
+        top:
+          modules:
+            - { type: 'w3des\AdminBundle\NodeModule\SliderModule' }
+        seo:
+          fields: 
+            meta_title: ~
+            meta_keywords: 
+              type: 'Symfony\Component\Form\Extension\Core\Type\TextareaType'
+            meta_description:
+              type: 'Symfony\Component\Form\Extension\Core\Type\TextareaType'
+    news:
+      sortable: false
+      locale: true
+      icon: 'rss'
+      url: title
+      enabled: true
+      maxDepth: 1
+      title: title
+      index: true
+      sections:
+        statics:
+          fields: 
+            public:
+              type: Symfony\Component\Form\Extension\Core\Type\CheckboxType
+              default: true
+            title: 
+              grid: true
+              index: true
+            url:
+              grid: true
+            publishDate:
+              type: w3des\AdminBundle\Form\Type\DateTimeType
+              grid: true
+              default: "now"
+            lead: 
+              type: 'Symfony\Component\Form\Extension\Core\Type\TextareaType'
+              index: true
+        content:
+          modules:
+            - { type: 'w3des\AdminBundle\NodeModule\ContentModule', default: true }
+            - { type: 'w3des\AdminBundle\NodeModule\GalleryModule' }
+        top:
+          modules:
+            - { type: 'w3des\AdminBundle\NodeModule\SliderModule' }
+        seo:
+          fields: 
+            meta_title: ~
+            meta_keywords: 
+              type: 'Symfony\Component\Form\Extension\Core\Type\TextareaType'
+            meta_description:
+              type: 'Symfony\Component\Form\Extension\Core\Type\TextareaType'
+    slider:
+      sortable: true
+      locale: true
+      icon: 'film'
+      enabled: true
+      maxDepth: 1
+      title: title
+      sections:
+        statics:
+          fields: 
+            public:
+              type: Symfony\Component\Form\Extension\Core\Type\CheckboxType
+              default: true
+            title: 
+              grid: true
+            url: ~
+            photo:
+              type: 'w3des\AdminBundle\Form\Type\AdvFileType'
+              options:
+                dir: 'slider'
+    box:
+      sortable: true
+      locale: true
+      icon: 'film'
+      enabled: true
+      maxDepth: 1
+      title: title
+      sections:
+        statics:
+          fields: 
+            public:
+              type: Symfony\Component\Form\Extension\Core\Type\CheckboxType
+              default: true
+            title: 
+              grid: true
+            url: ~
+            over:
+              type: 'Symfony\Component\Form\Extension\Core\Type\ChoiceType'
+              storeType: string
+              default: dark
+              options:
+                label: Mouse over
+                empty_data: 'dark'
+                choices:
+                  Jasny: light
+                  Ciemny: dark
+            photo:
+              type: 'w3des\AdminBundle\Form\Type\AdvFileType'
+              options:
+                dir: 'slider'
+  settings:
+    home:
+      intro:
+        fields:
+          intro_text: 
+            type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType'
+            options:
+              config:
+                bodyClass : 'text text-content'
+          intro_text2: 
+            type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType'
+            options:
+              config:
+                bodyClass : 'text text-content'
+          categories_more: 
+            type: ~
+            options:
+              label: 'Więcej kategorii'
+      seo:
+        fields:
+          home_meta_title:
+            options:
+              label_format: settings.meta_title
+          home_meta_description:
+            type: 'Symfony\Component\Form\Extension\Core\Type\TextareaType'
+            options:
+              label_format: settings.meta_description
+          home_meta_keywords:
+            type: 'Symfony\Component\Form\Extension\Core\Type\TextareaType'
+            options:
+              label_format: settings.meta_keywords
+    footer:
+      footer:
+        type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType'
+        options:
+          config:
+            bodyClass : 'text footer-content'
+    other:
+      facebook: ~
+      analytics:
+        locale: false
+        type: 'Symfony\Component\Form\Extension\Core\Type\TextareaType'
+      googlemap_key:
+        locale: false
+      mail_from: ~
+      mail_from_name:
+      mail_to: ~
+      popup:
+         type: 'w3des\AdminBundle\Form\Type\AdvFileType'
+         options:
+           dir: 'window'
+           label: Wyskakujące okno
+      popup_url:
+        options:
+          label: 'Wyskakujące okno - link'
+ivory_lucene_search:
+  nodes:
+    path: "%kernel.root_dir%/../var/nodes.index"
+    analyzer: ZendSearch\Lucene\Analysis\Analyzer\Common\TextNum\CaseInsensitive
+    query_parser_encoding: "UTF-8"
+ivory_ck_editor:
+    default_config: advance
+    configs:
+      default:
+      advance:
+        width: 700
+        contentsCss: css/content.css?%asset_version%
+        bodyClass: text
+        filebrowserBrowseRoute: 'elfinder'
+        filebrowserBrowseRouteParameters: []
+fm_elfinder:
+    #assets_path: / # default is /assets, this is where css/js elfinder files are
+    instances:
+        default:
+            locale: %admin.locale% # defaults to current request locale
+            editor: ckeditor
+            include_assets: true
+            connector:
+                #debug: true|false # defaults to false
+                roots:       # at least one root must be defined, defines root filemanager directories
+                    uploads:
+                        #show_hidden: true|false # defaults to false, hides dotfiles
+                        driver: LocalFileSystem
+                        path: uploads/userfiles
+                        url: 'uploads/userfiles'
+                        upload_allow: ['all']
+                        #upload_deny: ['all']
+                        upload_max_size: 256M
+ewz_recaptcha:
+    public_key:  6LcBUFkUAAAAABznemVTZeojUQOGNizZAkro9rsp
+    private_key: 6LcBUFkUAAAAAKVqwNGzZqW2tjXQS4tgHS_7kkTe
+    locale_from_request: true
+    enabled: true

@@ -1,0 +1,42 @@
+<section class="contact-form wrap" id="contact{{ module.id }}">
+    <h2 id="contact-form">{{ module|variable('title')|default('Formularz zapisu na szkolenie') }}</h2>
+    <div class="bg">
+    {% if app.session.flashbag.has('info' ~ module.id) %}
+        {% for flash in app.session.flashbag.get('info' ~ module.id) %}
+            <div class="info-box" id="ibox{{module.id}}">
+                {{ flash }}
+            </div>
+        {% endfor %}
+    {% else %}    
+    
+    {{ form_start(form) }}
+    <input type="hidden" name="_module" value="{{ module.id }}" />
+    {{ form_errors(form) }}
+    
+    <div class="row">
+        {{ form_row(form.name) }}
+        {{ form_row(form.trainingName) }}
+    </div>
+    
+    <div class="row">
+        {{ form_row(form.email) }}
+        {{ form_row(form.phone) }}
+    </div>
+    
+    <div class="row double-row">
+        {{ form_row(form.practiceName) }}
+        {% if module|variable('kind') == 'cad_cam' %}
+        {{ form_row(form.package) }}
+        {% else %}
+        {{ form_row(form.date) }}
+        {% endif %}
+    </div>
+    <div class="clear-fix"></div>
+    <div class="btns">
+        <input class="submit" type="submit" name="" class="submit" value="wyślij"/>
+    </div>
+ {{ form_end(form) }} 
+ {% endif %}
+    <div class="clear-fix"></div>
+ </div>
+</section>

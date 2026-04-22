@@ -1,0 +1,8 @@
+#!/bin/bash
+#git pull
+#php71 /usr/bin/composer.phar install -o
+#php71 ./bin/console doctrine:migrations:migrate -n
+php71 ./bin/console cache:clear --env=prod
+php71 ./bin/console assets:install
+php71 ./bin/console assetic:dump --env=prod
+

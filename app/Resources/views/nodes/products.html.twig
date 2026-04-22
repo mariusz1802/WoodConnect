@@ -1,0 +1,45 @@
+<section class="wrap products boxes">
+    {% if category %}
+        {% set ids = [category.id] %}
+        {% if category.children|length > 0 %}
+            <div class="filter">
+            <form method="get" action="{{ app.request.getBaseUrl ~ app.request.getPathInfo }}#go">
+                <select name="category">
+                {% set current =  app.request.query.get('category') %}
+                {% for child in category.children %}
+                    {% if loop.index == 1 and not current|default(false) %}
+                        {% set current = child.id %}
+                    {% endif %}
+                <option {% if child.id == current %}selected="selected" {% endif %} value="{{ child.id }}">{{ child|variable('title') }}</option>
+                {% endfor %}
+                </select>
+            </form>
+            </div>
+        {% else %}
+            {% set current =  category.id %}
+        {% endif %}
+        {% for node in load_nodes('product', {
+            orderBy : { 'title' : 'asc' },
+            where : {
+                category : [current]
+            }
+        }) %}
+       
+        {% if loop.index0 % 3 == 0 %}
+                <div class="clear-fix"></div>
+            {% endif %}
+        <a href="{{ node|url }}" class="box-wrap {{ node|variable('over') == 'light' ? 'light-box' : 'dark-box' }}"> 
+            <span class="box">
+            <span class="img">
+                <img src="{{ (node|variable('photo').path|default(false) ? _upload~node|variable('photo').path : 'images/nophoto.jpg')|imagine_filter('product') }}" />
+                <span class="scale" style="background-image: url({{ (node|variable('photo').path|default(false) ? _upload~node|variable('photo').path : 'images/nophoto.jpg')|imagine_filter('product') }})"></span>
+            </span> 
+            <span class="shadow"></span>
+            <span class="tit"><i></i> {{ node|variable('title') }}</span>
+            </span>
+        </a>
+            
+        {% endfor %}
+        {% endif %}
+    <div class="clear-fix"></div>
+</section>

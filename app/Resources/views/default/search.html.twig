@@ -1,0 +1,23 @@
+{% extends '::base.html.twig' %}
+{% block title %}Szukaj{%endblock%}
+{% block body %}
+<div class="title-wrap">
+    <h1><span>Wyszukiwarka</span></h1>
+</div>
+<section class="text text-content">
+    <div class="wrap">
+        {% if result|length > 0 %}
+        <h2>Znaleziono {{ result|length }} wyników dla frazy "{{ app.request.query.get('query') }}"</h2>
+        <ul class="search-result">
+        {% for res in result %}
+        <li><img src="{{ asset('images/li.png') }}" alt="" />&nbsp;&nbsp;<a href="{{ res|url }}">{{ res|variable('title') }}</a></li>
+        {% endfor %}
+        </ul>
+        {% else %}
+        <h2>Niestety nic nie znaleziono..</h2>
+        {% endif %}
+    </div>
+</section>
+<div class="clear-fix"></div>
+{% endblock %}
+

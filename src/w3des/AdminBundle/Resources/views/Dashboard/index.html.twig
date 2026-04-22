@@ -1,0 +1,14 @@
+{% extends 'w3desAdminBundle::layout.html.twig' %}
+{% block page_title %}Dashboard{% endblock %}
+{% block content %}
+<h1>{{ block('page_title') }}</h1>
+{% set menu = knp_menu_get('admin_menu') %}
+<div class="dashboard">
+    {% for child in menu.children %}
+    <a href="{{ child.uri }}">
+        <img src="{{ asset('bundles/w3desadmin/images/ico/128/'~ child.extra('ico')~ '.png') }}" width="128" height="128" />
+        {{ child.label }}
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}

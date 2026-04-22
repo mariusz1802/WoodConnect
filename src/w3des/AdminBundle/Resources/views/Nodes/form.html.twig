@@ -1,0 +1,33 @@
+{% extends 'w3desAdminBundle::layout.html.twig' %}
+{% trans_default_domain "admin" %}
+{% block page_title %}
+{{ ('node.'~type)|trans }} - {{ node.id ? ' Edycja' : 'Dodaj' }}
+{% if node.id %}
+"{{ node|variable(cfg.title) }}"
+{% endif %}
+{% endblock %}
+{% block content %}
+<h1>
+    {{ block('page_title') }}
+</h1>
+<p>/ <a class="alink" href="{{ url('admin.node', {type : type}) }}"><img src="{{ asset('bundles/w3desadmin/images/ico/16/document_page_previous.png') }}" /> {{ ('node.'~type)|trans }}</a>
+
+{% set tmp = node.parent %}
+{% for i in 1..1000 if tmp %}
+/ <a href="{{ url('admin.node.edit', {type : type, id : tmp.id}) }}">{{ tmp|variable(cfg.title) }}</a>
+{% set tmp = tmp.parent %}
+{% endfor %}
+{% if node.id %}
+/ <a href="{{ url('admin.node.edit', {type : type, id : node.id}) }}">{{ node|variable(cfg.title) }}</a>
+{% endif %}
+</p>
+
+<div id="form">
+{{ form_start(form) }}
+    <input class="submit" type="submit" name="" value="zapisz"/>
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+    <input class="submit" type="submit" name="" value="zapisz"/>
+ {{ form_end(form) }}   
+ </div>
+{% endblock %}

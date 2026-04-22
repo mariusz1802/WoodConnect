@@ -1,0 +1,15 @@
+{% if item is iterable %}
+    {% for tmp in item %}
+        {% include 'nodes/gallery_row.html.twig' with {item : tmp, mod : mod} %}
+    {% endfor %}
+{% else %}
+    {% set photo = item|variable('photo') %}
+    {% if photo.width == photo.height %}
+        {% set type = 'gallery_s' %}
+    {% elseif photo.width > photo.height %}
+        {% set type ='gallery_h' %}
+    {% else %}
+        {% set type ='gallery_v' %}
+    {% endif %}
+    <a href="{{ asset(_upload ~ photo.path) }}" rel="gallery[{{ mod.id }}]"><img src="{{ (_upload~photo.path)|imagine_filter(type) }}" /></a>
+{% endif %}

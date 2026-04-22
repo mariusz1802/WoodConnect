@@ -1,0 +1,24 @@
+{% extends 'w3desAdminBundle::layout.html.twig' %}
+{% trans_default_domain "admin" %}
+{% block page_title %}
+{{ ('users')|trans }} - {{ model.id ? ' Edycja' : 'Dodaj' }}
+{% if model.id %}
+"{{ model.email }}"
+{% endif %}
+{% endblock %}
+{% block content %}
+<h1>
+    {{ block('page_title') }}
+</h1>
+<p>/ <a class="alink" href="{{ url('admin.page_users') }}"><img src="{{ asset('bundles/w3desadmin/images/ico/16/document_page_previous.png') }}" /> {{ ('users')|trans }}</a>
+</p>
+
+<div id="form">
+{{ form_start(form) }}
+    <input class="submit" type="submit" name="" value="zapisz"/>
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+    <input class="submit" type="submit" name="" value="zapisz"/>
+ {{ form_end(form) }}   
+ </div>
+{% endblock %}

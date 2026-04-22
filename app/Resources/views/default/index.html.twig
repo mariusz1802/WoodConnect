@@ -1,0 +1,60 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+<div class="text home-content">
+    <div class="wrap">
+        <div class="col1">
+            {{ sett('intro_text')|raw }}
+        </div>
+        <div class="col2">
+            {{ sett('intro_text2')|raw }}
+        </div>
+        
+    </div>
+    <div class="clear-fix"></div>
+    <span class="bg"></span>
+</div>
+    {% set items = load_nodes(type|default('box'), {
+            where : {
+                public : true
+            }
+        }) %}
+    {%  set max = (items|length/2)|round(1, 'ceil')  %}
+    <div class="boxes home-boxes">
+    
+    {% if max  > 0 %}
+        {% for i in [0,1] %}
+        <div class="row row-{{ i }}">
+        		{% if i == 0 %}
+        			<h2><span>GŁÓWNE KATEGORIE</span></h2>
+			{% endif %}
+            {% for pos in 0..(max - 1)  %}
+            {%  set node = items[loop.index0 + (i * max)]|default(false) %}
+            {% if node %}
+            
+            {% set type = ((pos + i) % 2) == 0 ? 'box_s' : 'box_b' %}
+            <a href="{{ node|variable('url') }}" class="box {{ type }} {{ node|variable('over') == 'light' ? 'light-box' : 'dark-box' }}{% if pos==0 %} first{% endif %}{% if pos==max-1 %} last{% endif %}">
+                <span class="img">
+                    <img src="{{ (node|variable('photo').path|default(false) ? _upload~node|variable('photo').path : 'images/nophoto.jpg')|imagine_filter(type) }}" />
+                    <span class="scale" style="background-image: url({{ (node|variable('photo').path|default(false) ? _upload~node|variable('photo').path : 'images/nophoto.jpg')|imagine_filter(type) }})"></span>
+                </span> 
+                <span class="shadow"></span>
+                <span class="x t"></span>
+                <span class="x b"></span>
+                <span class="x r"></span>
+                <span class="x l"></span>
+                <span class="tit"><i></i>{{ node|variable('title') }}</span>
+            </a>
+            
+            {% endif %}
+            {% endfor %}
+            {% if i == 1 %}
+            	<a href="{{ sett('categories_more')|default('#') }}" class="more">Zobacz więcej kategorii <i></i></a>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <div class="clear-fix"></div>
+        </div>
+    {% endif %}
+
+{% endblock %}
+{% block body_class %}home{% endblock %}

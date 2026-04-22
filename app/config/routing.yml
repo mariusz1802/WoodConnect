@@ -1,0 +1,21 @@
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"
+    
+presta_sitemap:
+    resource: "@PrestaSitemapBundle/Resources/config/routing.yml"
+w3des_admin:
+    resource: "@w3desAdminBundle/Controller/"
+    prefix:   /admin
+    type: annotation 
+elfinder:
+     resource: "@FMElfinderBundle/Resources/config/routing.yml"
+     prefix: /admin/elfinder    
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+
+    
+nodes:
+    type: node
+    resource: .
+    

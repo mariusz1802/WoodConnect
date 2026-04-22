@@ -1,0 +1,21 @@
+<div class="files" id="file-{{ mod.id }}">
+    
+    <div class="bg">
+        <div class="wrap">
+        <h2><span>{{ mod|variable('title')|default('Materiały do pobrania') }}</span></h2>
+        {% if is_granted('ROLE_USER') %}
+        <p>Zalogowany jako: <strong>{{ app.token.user }}</strong> <a class="logout" href="{{ url('logout') }}">wyloguj</a></p>
+        {% endif %}
+        {% for item in items %}
+        <a href="{{ url('download', {id : item.id}) }}" class="file download-link">
+            <span class="ico {% if item|variable('name')|lower ends with '.pdf' %} ico-pdf{% endif %}"></span><br />
+            <span class="name">{{ item|variable('name') }}</span>
+        </a>
+        {% endfor %}
+        </div>
+    </div>
+    <div class="clear-fix"></div>
+    <div id="window-file-{{ mod.id }}" class="download-window">
+        <h5>Pobierz pliki</h5>
+    </div>
+</div>

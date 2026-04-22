@@ -1,0 +1,28 @@
+{% extends 'w3desAdminBundle::layout.html.twig' %}
+{% trans_default_domain "admin" %}
+{% block page_title %}
+Newsletter treść - {{ model.id ? ' Edycja' : 'Dodaj' }}
+{% if model.id %}
+"{{ model.title }}"
+{% endif %}
+{% endblock %}
+{% block content %}
+<h1>
+    {{ block('page_title') }}
+</h1>
+
+<div id="form">
+{{ form_start(form) }}
+    <input class="submit" type="submit" name="" value="zapisz"/>
+    {% if model.id %}
+    <input class="submit" type="submit" name="send" value="zapisz i wyślij"/>
+    {% endif %}
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+    <input class="submit" type="submit" name="" value="zapisz"/>
+     {% if model.id %}
+    <input class="submit" type="submit" name="send" value="zapisz i wyślij"/>
+    {% endif %}
+ {{ form_end(form) }}   
+ </div>
+{% endblock %}

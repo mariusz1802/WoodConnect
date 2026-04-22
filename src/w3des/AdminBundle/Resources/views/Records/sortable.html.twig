@@ -1,0 +1,33 @@
+<ol class="sortable" data-max="{{ cfg.maxDepth }}">
+    {% for node in items %}
+    <li id="node_{{ node.id  }}">
+        <div>
+            <span class="name"> 
+            {% for name in cfg.grid %}
+            {{ node|variable(name) }}
+            {% endfor %}
+             </span> <span class="admin">
+             {% if level < cfg.maxDepth %}
+             <a href="{{ url('admin.node.add', {
+                    type :  type,
+                    parent : node.id
+                }) }}"><img src="{{ asset('bundles/w3desadmin/images/ico/16/add.png') }}" />Dodaj</a> 
+             {% endif %}
+              <a href="{{ url('admin.node.edit', {
+                    type : type,
+                    id : node.id
+                }) }}"><img src="{{ asset('bundles/w3desadmin/images/ico/16/edit.png') }}" />Edytuj</a> 
+                
+                <a
+                href="{{ url('admin.node.remove', {
+                    type :  type,
+                    id : node.id
+                }) }}" onclick="return confirm('Czy na pewno?');"><img src="{{ asset('bundles/w3desadmin/images/ico/16/delete.png') }}" />Usuń</a>
+            </span>
+        </div>
+        {% if node.children|length %}
+        {% include 'w3desAdminBundle:Nodes:sortable.html.twig' with { items : node.children, level : level+ 1, cfg : cfg, type : type, fields : fields } %}
+        {% endif %}
+    </li>
+    {% endfor %}
+</ol>

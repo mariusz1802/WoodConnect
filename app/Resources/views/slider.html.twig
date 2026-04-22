@@ -1,0 +1,33 @@
+{% if items is not defined %}
+{% set items = load_nodes('slider') %}
+{% endif %}
+{% if items|length == 0 %}
+<div id="no-slider"></div>
+{% else %}
+<div id="slider">
+    <ul class="slides rslides">
+        {% for node in items %}
+        <li >
+            {% set url = node|variable('url') %}
+            {% if url %}
+            <a href="{%spaceless%}
+                {% if 'youtube' in url|lower %}
+                    {{  (url|youtube_embed ~ '" data-rel="gallery-slider-' ~ module|default({id : 'home'}).id ~ '')|raw }}
+                {% else %}
+                    {{ url }}
+                {% endif %}
+            {% endspaceless %}">
+            {% endif %}
+            <img src="{{ asset(_upload ~ node|variable('photo').path | default('null')) }}"  />
+            <span class="over"></span>
+            <span class="over2"></span>
+             {% if url %}
+            </a>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    <div class="clear-fix"></div>
+    <a href="#cnt" class="down"><span><i></i></span></a>
+</div>
+{% endif %}

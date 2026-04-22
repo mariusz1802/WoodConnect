@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="w3des_newsletter.admin_menu" class="w3des\NewsletterBundle\EventListener\AdminMenuListener">
+            <argument type="service" id="translator" />
+            <tag name="kernel.event_listener" event="admin.menu" method="onMenuConfigure"/>
+        </service>
+        <service id="newsletter" class="w3des\NewsletterBundle\Util">
+            <argument type="service" id="doctrine.orm.default_entity_manager"></argument>
+            <argument type="service" id="request_stack"></argument>
+            <argument type="service" id="router"></argument>
+            <argument type="service" id="settings"></argument>
+            <argument type="service" id="mailer"></argument>
+            <argument>%router.request_context.scheme%</argument>
+            <argument>%router.request_context.host%</argument>
+        </service>
+    </services>
+</container>

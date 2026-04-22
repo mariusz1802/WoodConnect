@@ -1,0 +1,88 @@
+locale.pl: polska
+locale.de: niemiecka
+locale.en: angielska
+logout: Wyloguj
+settings: Ustawienia
+settings.home: Strona główna
+settings.footer: Stopka
+settings.other: Pozostałe
+settings.facebook: Facebook
+settings.google_plus: Google Plus
+settings.youtube: YoutTube
+settings.analytics: Analytics
+settings.box1: Box 1
+settings.box2: Box 2
+settings.box3: Box 3
+settings.box4: Box 4
+users: Użytkownicy
+
+settings.box.title: Tytuł
+settings.box.photo: Obrazek
+settings.box.url: URL
+settings.seo: SEO
+
+settings.intro: Intro 
+settings.intro_title: Tytuł
+settings.intro_btn: Tekst przycisku
+settings.intro_text: Treść
+settings.intro_text: Treść 2
+settings.intro_url: URL
+
+settings.meta_title: Tytuł META
+settings.meta_description: Opis META
+settings.meta_keywords: Słowa kluczowe META
+
+settings.googlemap_key: Klucz google maps API
+
+settings.mail_from: 'E-mail OD'
+settings.mail_from_name: 'E-mail OD - nazwa'
+settings.mail_to: 'E-mail DO'
+settings.mail_download_to: 'E-mail nowy użytkownik DO'
+settings.quick_contact: 'Szybki kontakt'
+settings.quick_contact_url: 'Szybki kontakt adres'
+
+node.pages: Menu
+node.category: Kategorie
+node.product: Produkty
+node.news: Aktualności
+node.slider: Slider
+node.attribute: Atrybuty 
+node.ads: Ogłoszenia
+node.offer: Oferta
+node.box: Boxy
+
+dashboard: Dashboard
+
+edit: Edytuj
+remove: Usuń  
+add: Dodaj
+
+node.section.statics: Dane podstawowe
+node.section.content: Treść
+node.section.seo: SEO
+node.section.top: "Nagłówek (head strony)"
+node.section.content: Treść
+node.section.attributes: Atrybuty
+
+
+node.field.title: Tytuł
+
+node.field.meta_title: Tytuł META
+node.field.meta_description: Opis META
+node.field.meta_keywords: Słowa kluczowe
+node.field.category: Kategoria
+node.field.content: Treść
+node.field.photo: Obrazek
+node.field.url: URL
+node.field.name: Nazwa
+node.field.public: Publiczny
+node.field.galleryType: Rodzaj galerii
+node.field.publishDate: Data publikacji
+node.field.lead: Lead
+node.field.lat: Długość
+node.field.lng: Szerokość
+node.field.slogan: Slogan
+node.field.video_url: Video
+node.field.redirect: Przekierowanie
+node.field.subject: Tytuł maila
+node.field.kind: Rodzaj

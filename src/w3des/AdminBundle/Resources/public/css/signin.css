@@ -1,0 +1,135 @@
+@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,400italic,300,300italic,700,700italic&amp;subset=latin,latin-ext);
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
+    blockquote, pre, a, abbr, acronym, address, big, cite, code, del,
+    dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup,
+    tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form,
+    label, legend, table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed, figure, figcaption, footer,
+    header, hgroup, menu, nav, output, ruby, section, summary, time,
+    mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup,
+    menu, nav, section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+html, body {
+    background: white;
+    font-family: Tahoma;
+    font-size: 12px;
+    color: #4a4a4a
+}
+
+html, body {
+    background: #3d3d3d
+}
+
+.box {
+    width: 310px;
+    height: 390px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -195px 0 0 -155px
+}
+
+input {
+    outline: 0;
+    font-family: Tahoma
+}
+
+.logoTop {
+    height: 115px;
+    background: url(../../images/admin/logoTop.png) no-repeat
+}
+
+.form {
+    border: 1px solid #ebebeb;
+    background: #f6f6f6;
+    padding: 25px;
+    height: 170px
+}
+
+.form label {
+    display: block;
+    padding-bottom: 5px
+}
+
+.form .text {
+    display: block;
+    border: 1px solid #dfdfdf;
+    padding: 9px;
+    width: 240px;
+    margin-bottom: 20px
+}
+
+.form .text:focus {
+    border-color: #afafaf;
+    background:white url(../images/user_edit.png) 225px 9px no-repeat;
+}
+
+.creator {
+    height: 30px;
+    margin-top: 10px;
+    background: url(../images/creator.png) bottom right no-repeat;
+    display: block
+}
+
+.err {
+    color: #bb1616;
+    display: block;
+    line-height: 32px
+}
+
+button {
+    float: right;
+    background: transparent;
+    border: 0 solid;
+    cursor: pointer;
+    padding: 0;
+    margin: 0
+}
+
+button:hover {
+    opacity: .8
+}
+
+button span {
+    display: block;
+    border: 1px solid #1667a2;
+    background: #4196cb;
+    color: white;
+    line-height: 32px;
+    width: 87px;
+    font-size: 12px;
+    text-align: center
+}

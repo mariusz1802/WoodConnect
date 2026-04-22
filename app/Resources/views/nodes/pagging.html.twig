@@ -1,0 +1,12 @@
+{% if pages > 1 %}<ul class="pagging">
+    {% if current > 1 %}
+    <li><a href="?page={{ current-1 }}" class="prev">&laquo; poprzednia </a></li>
+    {% endif %}
+    {% for p in 1..pages %}
+    <li><a href="?page={{ p }}"{{ p == current ? ' class="current"' : '' }}>{{ p }}</a></li>
+    {% endfor %}
+    {% if current < pages %}
+    <li><a href="?page={{ current+1 }}" class="next">następna &raquo;</a></li>
+    {% endif %}
+</ul>
+{% endif %}

@@ -1,0 +1,13 @@
+<div class="attribute-container">
+    <h2>Specyfikacja techniczna</h2>
+    {% for attr in attrs %}
+        {% if  module|variable('attr_'~attr.id~'_content') %}
+        <section class="attribute">
+            <h2>{{ attr|variable('title') }} <i></i></h2>
+            <div class="wrap text text-content attribute-content">
+                {{ module|variable('attr_'~attr.id~'_content')|raw }}
+            </div>
+        </section>
+        {% endif %}
+    {% endfor %}
+</div>

@@ -1,0 +1,55 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/security.html
+security:
+    role_hierarchy:
+        ROLE_ADMIN:       [ 'ROLE_USER', 'ROLE_ALLOWED_TO_SWITCH' ]
+    encoders:
+      w3des\AdminBundle\Entity\User:
+        algorithm: bcrypt
+      w3des\AdminBundle\Entity\PageUser:
+        algorithm: bcrypt
+
+    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    providers:
+        admin_user_provider:
+          entity:
+            class: w3desAdminBundle:User
+        page_user_provider:
+          entity:
+            class: w3desAdminBundle:PageUser
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        admin:
+            pattern: '^/admin'
+            context: admin_auth
+            provider: admin_user_provider
+            anonymous: ~
+            form_login:
+              login_path: admin.login
+              check_path: admin.login
+              always_use_default_target_path: true
+              default_target_path: /admin
+            logout:
+              path: /admin/logout
+              target: /admin
+        main:
+            context: page_auth
+            anonymous: ~
+            provider: page_user_provider
+            form_login:
+              login_path: login
+              check_path: login
+              always_use_default_target_path: false
+              default_target_path: /
+            logout:
+              path: /logout
+              target: /
+    access_control:
+      - { path: '^/admin/login$', role: 'IS_AUTHENTICATED_ANONYMOUSLY' }
+      - { path: '^/admin/logout$', role: 'IS_AUTHENTICATED_ANONYMOUSLY' }
+      - { path: '^/admin', role: 'ROLE_ADMIN' }
+#      - { path: '^/_download', role: 'ROLE_USER' }

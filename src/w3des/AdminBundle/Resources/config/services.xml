@@ -1,0 +1,154 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+	<services>
+		<service id="w3des_admin.locale_listener" class="w3des\AdminBundle\EventListener\LocaleListener">
+			<argument type="service" id="session" />
+			<argument>%admin.locale%</argument>
+			<argument>%page.default_locale%</argument>
+			<argument>%page.locales%</argument>
+			<tag name="kernel.event_subscriber" />
+		</service>
+		<service id="w3des_admin.menu_builder" class="w3des\AdminBundle\Menu\AdminMenuBuilder">
+			<argument type="service" id="knp_menu.factory" />
+			<argument type="service" id="settings" />
+			<argument type="service" id="nodes" />
+			<argument type="service" id="request_stack" />
+			<argument type="service" id="translator" />
+			<argument type="service" id="event_dispatcher" />
+			<tag name="knp_menu.menu_builder" method="createMenu" alias="admin_menu" />
+		</service>
+		<service id="settings" class="w3des\AdminBundle\Service\Settings">
+			<argument type="service" id="doctrine.orm.default_entity_manager" />
+			<argument type="service" id="request_stack" />
+			<argument type="service" id="values" />
+		</service>
+		<service id="w3des_admin.twig_extension" class="w3des\AdminBundle\Twig\AdminExtension"
+			public="false">
+			<argument type="service" id="settings" />
+			<argument type="service" id="nodes" />
+			<tag name="twig.extension" />
+		</service>
+		<service id="nodes" class="w3des\AdminBundle\Service\Nodes">
+			<argument type="service" id="doctrine.orm.default_entity_manager" />
+			<argument type="service" id="values" />
+			<argument type="service" id="router" />
+			<argument>%page.default_locale%</argument>
+			<call method="setContainer">
+				<argument type="service" id="service_container" />
+			</call>
+		</service>
+		<service id="values" class="w3des\AdminBundle\Service\Values">
+			<argument>%upload.dir%</argument>
+		</service>
+		<service id="w3des_admin.form.node" class="w3des\AdminBundle\Form\Type\NodeType">
+			<argument type="service" id="doctrine.orm.default_entity_manager" />
+			<argument type="service" id="request_stack" />
+			<argument type="service" id="nodes" />
+			<tag name="form.type" />
+		</service>
+		<service id="w3des_admin.form.modules" class="w3des\AdminBundle\Form\Type\NodeModulesType">
+			<argument type="service" id="nodes" />
+			<tag name="form.type" />
+		</service>
+		<service id="w3des_admin.form.module" class="w3des\AdminBundle\Form\Type\NodeModuleType">
+			<argument type="service" id="values" />
+			<argument type="service" id="nodes" />
+			<tag name="form.type" />
+		</service>
+		<service id="w3des_admin.node_conveter" class="w3des\AdminBundle\Request\NodeConverter">
+			<argument type="service" id="doctrine.orm.default_entity_manager" />
+			<tag name="request.param_converter" priority="-1" converter="node" />
+		</service>
+		<service id="w3des_admin.node_routing_loader" class="w3des\AdminBundle\Routing\NodeRoutingLoader">
+			<argument>%page.locales%</argument>
+			<argument>%page.default_locale%</argument>
+			<tag name="routing.loader" />
+		</service>
+		<service id="w3des_admin.node_module.content" class="w3des\AdminBundle\NodeModule\ContentModule">
+			<argument type="service" id="twig" />
+			<tag name="node.module" />
+		</service>
+		<service id="w3des_admin.node_module.slider" class="w3des\AdminBundle\NodeModule\SliderModule">
+            <argument type="service" id="twig" />
+            <argument type="service" id="nodes" />
+            <tag name="node.module" />
+        </service>
+        <service id="w3des_admin.node_module.gallery" class="w3des\AdminBundle\NodeModule\GalleryModule">
+            <argument type="service" id="twig" />
+            <argument type="service" id="nodes" />
+            <tag name="node.module" />
+        </service>
+        <service id="w3des_admin.node_module.files" class="w3des\AdminBundle\NodeModule\FileModule">
+            <argument type="service" id="twig" />
+            <argument type="service" id="nodes" />
+            <argument type="service" id="form.factory" />
+            <tag name="node.module" />
+        </service>
+        <service id="w3des_admin.node_module.map" class="w3des\AdminBundle\NodeModule\MapModule">
+            <argument type="service" id="twig" />
+            <tag name="node.module" />
+        </service>
+        <service id="w3des_admin.node_module.contact" class="w3des\AdminBundle\NodeModule\ContactModule">
+            <argument type="service" id="twig" />
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="settings" />
+            <argument type="service" id="mailer" />
+            <tag name="node.module" />
+        </service>
+        <service id="w3des_admin.node_module.records" class="w3des\AdminBundle\NodeModule\RecordsModule">
+            <argument type="service" id="twig" />
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="settings" />
+            <argument type="service" id="mailer" />
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="service" id="nodes" />
+            <tag name="node.module" />
+        </service>
+        <service id="w3des_admin.node_module.rate" class="w3des\AdminBundle\NodeModule\RateModule">
+            <argument type="service" id="twig" />
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="settings" />
+            <argument type="service" id="mailer" />
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument type="service" id="session" />
+            <tag name="node.module" />
+        </service>
+        <service id="w3des_admin.node_module.list" class="w3des\AdminBundle\NodeModule\ListModule">
+            <argument type="service" id="twig" />
+            <tag name="node.module" />
+        </service>
+        <service id="w3des_admin.node_module.ads" class="w3des\AdminBundle\NodeModule\AdsModule">
+            <argument type="service" id="twig" />
+            <tag name="node.module" />
+        </service>
+        <service id="w3des_admin.node_module.offer" class="w3des\AdminBundle\NodeModule\OfferModule">
+            <argument type="service" id="twig" />
+            <tag name="node.module" />
+        </service>
+        <service id="w3des_admin.node_module.products" class="w3des\AdminBundle\NodeModule\ProductsModule">
+            <argument type="service" id="twig" />
+            <argument type="service" id="nodes" />
+            <tag name="node.module" />
+        </service>
+        <service id="w3des_admin.node_module.attr" class="w3des\AdminBundle\NodeModule\AttributeModule">
+            <argument type="service" id="twig" />
+            <argument type="service" id="nodes" />
+            <tag name="node.module" />
+        </service>
+		<service id="w3des_admin.form.gallery" class="w3des\AdminBundle\Form\Type\GalleryType">
+            <argument type="service" id="nodes" />
+            <argument type="service" id="values" />
+            <tag name="form.type" />
+        </service>
+        <service id="w3des_admin.form.gallery_item" class="w3des\AdminBundle\Form\Type\GalleryItemType">
+            <argument type="service" id="nodes" />
+            <argument type="service" id="values" />
+            <tag name="form.type" />
+        </service>
+	</services>
+
+
+</container>

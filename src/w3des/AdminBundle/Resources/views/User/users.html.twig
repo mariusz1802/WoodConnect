@@ -1,0 +1,65 @@
+{% extends 'w3desAdminBundle::layout.html.twig' %}
+{% trans_default_domain "admin" %}
+{% block page_title %}
+{{ ('users')|trans }}
+{% endblock %}
+{% block content %}
+<h1>
+    {{ block('page_title') }}
+</h1>
+<p>
+    <a href="{{ url('admin.users.add') }}"><img src="{{ asset('bundles/w3desadmin/images/ico/16/add.png') }}" /> Dodaj</a>
+</p>
+<div id="grid"></div>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+$(function() {
+    $('#grid').jsGrid({
+        width: '100%',
+        filtering: true,
+        sorting: true,
+        paging: true,
+        editing: true,
+        autoload: true,
+        deleteConfirm: function(item) {
+            return "Czy na pewno chcesz to zrobić?";
+        },
+        onItemEditing : function(args) {
+            window.location = '{{url("admin.users.edit", {  id : '@id@' })|raw}}'.replace(/@id@/g, args.item.id);
+            args.cancel = true;
+        },
+        onItemEditing : function(args) {
+            window.location = '{{url("admin.users.edit", { id : '@id@' })|raw}}'.replace(/@id@/g, args.item.id);
+            args.cancel = true;
+        },
+        onItemDeleted : function(args) {
+            window.location = '{{url("admin.users.remove", { id : '@id@' })|raw}}'.replace(/@id@/g, args.item.id);
+            args.cancel = true;
+        },
+        pageLoading: true,
+        controller : {
+            loadData : function(filter) {
+                var d = jQuery.Deferred();
+                $.ajax({
+                    url : '{{url("admin.users.json")}}',
+                    dataType : 'json',
+                    data : filter
+                }).done(function(response) {
+                    d.resolve(response);
+                });
+
+                return d.promise();
+            }
+        },
+        fields : [
+            {name : 'email',title: 'email', 'type' : 'text'},
+            {name: 'isEnabled', 'title' : 'Włączony', type : 'checkbox'},
+            {type : 'control'}
+        ]
+    });
+});
+
+</script>
+{% endblock %}
